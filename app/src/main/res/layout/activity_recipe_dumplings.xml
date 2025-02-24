@@ -20,38 +20,30 @@
         app:layout_constraintTop_toBottomOf="@+id/name_pelmeni"
         app:srcCompat="@drawable/dumplings_big_for_activity" />
 
-    <ImageView
-        android:id="@+id/nizhny_panel"
-        android:layout_width="390dp"
-        android:layout_height="73dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/panel" />
-
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="392dp"
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rounded_linear_layout"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/domik"
+            android:id="@+id/button_home"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
-            android:onClick="goHome"
             app:srcCompat="@drawable/button_home" />
 
         <ImageButton
-            android:id="@+id/plus"
+            android:id="@+id/button_plus"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -61,7 +53,7 @@
             app:srcCompat="@drawable/button_plus" />
 
         <ImageButton
-            android:id="@+id/serdce"
+            android:id="@+id/button_heart"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -71,7 +63,7 @@
             app:srcCompat="@drawable/button_heart" />
 
         <ImageButton
-            android:id="@+id/shesterenka"
+            android:id="@+id/button_gear"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -127,7 +119,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/nizhny_panel"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
@@ -138,11 +130,10 @@
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/nizhny_panel"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         </FrameLayout>
 

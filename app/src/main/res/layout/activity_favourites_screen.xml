@@ -13,16 +13,14 @@
         android:id="@+id/favourites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
         android:layout_marginTop="88dp"
-        android:layout_marginEnd="195dp"
         android:alpha="1"
         android:fontFamily="@font/montserrat"
         android:text="Избранное"
         android:textColor="#000"
         android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,24 +49,17 @@
         app:layout_constraintTop_toTopOf="@+id/scrollView2" />
 
 
-    <ImageView
-        android:id="@+id/panel"
-        android:layout_width="390dp"
-        android:layout_height="73dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/panel" />
-
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="392dp"
+        android:id="@id/panel"
+        android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
         android:orientation="horizontal"
+        android:background="@drawable/rounded_linear_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
@@ -78,7 +69,6 @@
             android:layout_weight="1"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
-            android:onClick="goMainScreen"
             app:srcCompat="@drawable/button_home" />
 
         <ImageButton
