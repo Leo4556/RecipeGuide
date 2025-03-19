@@ -30,14 +30,13 @@ import com.example.recipeguide.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import Data.DatabaseHandler;
+
 
 public class FavouritesScreen extends AppCompatActivity {
 
 
     ListView listView;
-    ArrayAdapter<String> arrayAdapter;
-
-    private String[] dishesArr = {"ПЕЛЬМЕНИ С УКРОПОМ  ОБЫКНОВЕННЫЕ", "РИС С ОВОЩАМИ", "ЧАЙ"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +45,23 @@ public class FavouritesScreen extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
+        DatabaseHandler databaseHelper = new DatabaseHandler(this);
+        ArrayList<Dish> dishes = databaseHelper.getFavoriteRecipe();
+        DishAdapter adapter = new DishAdapter(this, dishes); // Создаём адаптер
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dishesArr);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(adapter); // Устанавливаем адаптер
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedDish = parent.getItemAtPosition(position).toString();
-                Toast.makeText(FavouritesScreen.this, "Вы выбрали: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-                Intent intent;
-                switch (selectedDish) {
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            // Получаем выбранное блюдо
+            Dish selectedDish = adapter.getItem(position);
 
-                    case "ПЕЛЬМЕНИ С УКРОПОМ  ОБЫКНОВЕННЫЕ":
-                        intent = new Intent(FavouritesScreen.this, recipe_dumplings_activity.class);
-                        break;
-
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + selectedDish);
-                }
-
-
-
-                intent.putExtra("nameOfDish", dishesArr[position]);
+            if (selectedDish != null) {
+                // Создаём Intent и передаём ID блюда
+                Intent intent = new Intent(getApplicationContext(), recipe_dumplings_activity.class);
+                intent.putExtra("dish_id", selectedDish.getId()); // Передаём ID блюда
                 startActivity(intent);
             }
         });
-
 
     }
 

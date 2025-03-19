@@ -3,13 +3,17 @@ package com.example.recipeguide;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,16 +23,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.jar.Attributes;
+
+import Data.DatabaseHandler;
+import Model.Recipe;
+import Utils.Util;
 
 
 public class SearchActivity extends AppCompatActivity {
 
     SearchView searchView;
     ListView listView;
-    ArrayAdapter<String> arrayAdapter;
-
-    private String[] dishesArr = {"ПЕЛЬМЕНИ С УКРОПОМ  ОБЫКНОВЕННЫЕ"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,43 +43,35 @@ public class SearchActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         searchView = findViewById(R.id.search_field);
+        searchView.setQueryHint("Поиск...");
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dishesArr);
-        listView.setAdapter(arrayAdapter);
+        DatabaseHandler databaseHelper = new DatabaseHandler(this);
+        ArrayList<Dish> dishes = databaseHelper.getAllRecipe();
+        DishAdapter adapter = new DishAdapter(this, dishes); // Создаём адаптер
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedDish = parent.getItemAtPosition(position).toString();
-                Toast.makeText(SearchActivity.this, "Вы выбрали: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-                Intent intent;
-                switch (selectedDish) {
+        listView.setAdapter(adapter); // Устанавливаем адаптер
 
-                    case "ПЕЛЬМЕНИ С УКРОПОМ  ОБЫКНОВЕННЫЕ":
-                        intent = new Intent(SearchActivity.this, recipe_dumplings_activity.class);
-                        break;
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            // Получаем выбранное блюдо
+            Dish selectedDish = adapter.getItem(position);
 
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + selectedDish);
-                }
-
-
-
-                intent.putExtra("nameOfDish", dishesArr[position]);
+            if (selectedDish != null) {
+                // Создаём Intent и передаём ID блюда
+                Intent intent = new Intent(getApplicationContext(), recipe_dumplings_activity.class);
+                intent.putExtra("dish_id", selectedDish.getId()); // Передаём ID блюда
                 startActivity(intent);
             }
         });
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                arrayAdapter.getFilter().filter(query);
+                adapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                arrayAdapter.getFilter().filter(newText);
+                adapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -93,6 +91,5 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FavouritesScreen.class);
         startActivity(intent);
     }
-
 
 }

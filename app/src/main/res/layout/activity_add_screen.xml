@@ -93,26 +93,38 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
-            <ImageButton
+            <Button
                 android:id="@+id/ingredients_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="#00FFFFFF"
+                android:background="@drawable/rounded_button_fragment"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/button_ingredients"
-                android:text="Ингридиенты"
+                android:fontFamily="@font/montserrat"
+                android:text="Ингредиенты"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/recipe_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="#00FFFFFF"
+                android:background="@drawable/rounded_button_fragment"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/button_recipe"
+                android:fontFamily="@font/montserrat"
                 android:text="Рецепт"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
@@ -174,6 +186,7 @@
             android:layout_weight="1"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
+            android:onClick="goHome"
             app:srcCompat="@drawable/button_home" />
 
         <ImageButton

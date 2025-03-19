@@ -19,6 +19,9 @@
         android:hint="Поиск..."
         android:inputType="text"
         android:background="#FFDDAF"
+        android:focusable="true"
+        android:clickable="true"
+        android:iconifiedByDefault="false"
         android:textColor="#000000"
         android:textColorHint="#80000000"
         android:textSize="20dp"
@@ -70,6 +73,7 @@
             android:layout_weight="1"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
+            android:onClick="goHome"
             app:srcCompat="@drawable/button_home" />
 
         <ImageButton

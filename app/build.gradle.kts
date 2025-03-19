@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation(libs.appcompat)
     implementation(libs.material)

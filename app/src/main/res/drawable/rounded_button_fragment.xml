@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Цвет при нажатии -->
+    <item android:state_pressed="true" android:drawable="@drawable/rounded_button_pressed" />
+    <!-- Цвет при фокусе -->
+    <item android:state_focused="true" android:drawable="@drawable/rounded_button_focused" />
+    <!-- Цвет по умолчанию -->
+    <item android:drawable="@drawable/rounded_button_default" />
+</selector>

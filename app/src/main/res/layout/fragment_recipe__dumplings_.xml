@@ -6,7 +6,7 @@
     tools:context=".Recipe_Dumplings_Fragment">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/recipe_dish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
