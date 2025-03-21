@@ -3,6 +3,7 @@ package Data;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import Model.Recipe;
@@ -88,6 +90,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
         Recipe recipe = new Recipe(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),  cursor.getString(2), Integer.parseInt(cursor.getString(3)),
                 cursor.getString(4),  cursor.getString(5), Integer.parseInt(cursor.getString(6)));
+        cursor.close();
         return recipe;
     }
 
@@ -117,6 +120,76 @@ public class DatabaseHandler extends SQLiteAssetHelper {
                 dishList.add(dish);
             }while (cursor.moveToNext());
         }
+        cursor.close();
+        return dishList;
+    }
+
+    public ArrayList<Dish> getRecommendedRecipe(Context context){
+        try {
+            myDataBase = getReadableDatabase();
+            if (myDataBase != null) {
+                Log.d("DB_DEBUG", "Database opened successfully");
+            } else {
+                Log.e("DB_ERROR", "Database is null");
+            }
+        } catch (Exception e) {
+            Log.e("DB_ERROR", "Error opening database: " + e.getMessage());
+        }
+        SharedPreferences preferences = context.getSharedPreferences("RandomItems", context.MODE_PRIVATE);
+
+        // Получаем время последнего обновления
+        long lastUpdateTime = preferences.getLong("lastUpdateTime", 0);
+        long currentTime = System.currentTimeMillis();
+
+        if (currentTime - lastUpdateTime < 86400000) {
+            // Если ещё не прошло 24 часа, возвращаем сохранённые данные
+            String savedData = preferences.getString("savedDishes", null);
+            if (savedData != null) {
+                ArrayList<Dish> savedDishes = new ArrayList<>();
+                // Восстанавливаем сохранённые данные (формат: id|name|image|time, ...)
+                String[] dishesArray = savedData.split(";");
+                for (String dishData : dishesArray) {
+                    String[] dishFields = dishData.split("\\|");
+                    Dish dish = new Dish(
+                            Integer.parseInt(dishFields[0]),  // id
+                            dishFields[1],                   // recipeName
+                            dishFields[2],                   // recipeImage
+                            Integer.parseInt(dishFields[3])  // recipeCookingTime
+                    );
+                    savedDishes.add(dish);
+                }
+                return savedDishes;
+            }
+        }
+
+        ArrayList<Dish> dishList = new ArrayList<>();
+        String selectAllRecipe = "SELECT " + Util.KEY_ID + ", " + Util.KEY_NAME + ", " + Util.KEY_IMAGE + ", " + Util.KEY_COOKINGTIME + " FROM " + Util.TABLE_NAME + " ORDER BY RANDOM() LIMIT 3";
+        Cursor cursor = myDataBase.rawQuery(selectAllRecipe, null);
+        if (cursor.moveToFirst()){
+            do{
+                Dish dish = new Dish();
+                dish.setId(Integer.parseInt(cursor.getString(0)));
+                dish.setRecipeName(cursor.getString(1));
+                dish.setRecipeImage(cursor.getString(2));
+                dish.setRecipeCookingTime(Integer.parseInt(cursor.getString(3)));
+
+                dishList.add(dish);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        SharedPreferences.Editor editor = preferences.edit();
+        StringBuilder savedDishesBuilder = new StringBuilder();
+        for (Dish dish : dishList) {
+            savedDishesBuilder.append(dish.getId()).append("|")
+                    .append(dish.getRecipeName()).append("|")
+                    .append(dish.getRecipeImage()).append("|")
+                    .append(dish.getRecipeCookingTime()).append(";");
+        }
+        editor.putLong("lastUpdateTime", currentTime);
+        editor.putString("savedDishes", savedDishesBuilder.toString());
+        editor.apply();
+
         return dishList;
     }
 
@@ -145,6 +218,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
                 dishList.add(dish);
             }while (cursor.moveToNext());
         }
+        cursor.close();
         return dishList;
     }
 

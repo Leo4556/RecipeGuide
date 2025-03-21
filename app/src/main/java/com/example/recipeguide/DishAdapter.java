@@ -57,7 +57,7 @@ public class DishAdapter extends ArrayAdapter<Dish> {
                 }
             } else {
                 // Устанавливаем изображение-заглушку, если данных нет
-                dishImageView.setImageResource(R.drawable.dumplings);
+                dishImageView.setImageResource(R.drawable.stub);
             }
 
             dishCookingTimeTextView.setText("Время приготовления:\n" + dish.getRecipeCookingTime() + " мин");
