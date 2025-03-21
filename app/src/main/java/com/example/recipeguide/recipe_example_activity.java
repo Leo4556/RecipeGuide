@@ -4,11 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,10 +25,10 @@ import java.io.File;
 import Data.DatabaseHandler;
 import Model.Recipe;
 
-public class recipe_dumplings_activity extends AppCompatActivity {
+public class recipe_example_activity extends AppCompatActivity {
 
 
-    private Ingredient_Dumplings_Fragment ingridientFragment = new Ingredient_Dumplings_Fragment();
+    private Ingredient_Fragment_Example ingredientFragment = new Ingredient_Fragment_Example();
     private boolean isFavorite = false;
 
     @SuppressLint("WrongViewCast")
@@ -35,7 +36,7 @@ public class recipe_dumplings_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_recipe_dumplings);
+        setContentView(R.layout.activity_recipe_example);
         setupBackButtonHandler();
         ImageButton saveFavoritesButton = findViewById(R.id.button_save_favorites);
         int dishId = getIntent().getIntExtra("dish_id", -1); // -1 — значение по умолчанию
@@ -47,7 +48,7 @@ public class recipe_dumplings_activity extends AppCompatActivity {
         Button ingredientButton = findViewById(R.id.ingredient);
         Button recipeButton = findViewById(R.id.recipe);
 
-        setNewFragment(ingridientFragment);
+        setNewFragment(ingredientFragment);
         ingredientButton.setBackgroundResource(R.drawable.rounded_button_focused);
 
 
@@ -59,7 +60,7 @@ public class recipe_dumplings_activity extends AppCompatActivity {
 
                 // Устанавливаем фокус на текущую кнопку
                 ingredientButton.setBackgroundResource(R.drawable.rounded_button_focused);
-                setNewFragment(ingridientFragment);
+                setNewFragment(ingredientFragment);
 
             }
         });
@@ -67,7 +68,7 @@ public class recipe_dumplings_activity extends AppCompatActivity {
         recipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Recipe_Dumplings_Fragment receptFragment = new Recipe_Dumplings_Fragment();
+                Recipe_Fragment_Example receptFragment = new Recipe_Fragment_Example();
                 if (dishId != -1) {
                     Recipe selectedDish = databaseHelper.getRecipe(dishId);
                     sendDishDataToFragment(receptFragment, selectedDish);
@@ -79,6 +80,21 @@ public class recipe_dumplings_activity extends AppCompatActivity {
                 setNewFragment(receptFragment);
             }
         });
+
+
+
+
+        //Статусбар белого цвета
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.WHITE);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
     }
 
@@ -114,7 +130,7 @@ public class recipe_dumplings_activity extends AppCompatActivity {
                 }else {
                     dishFavorite.setImageResource(R.drawable.button_heart_red);
                 }
-                sendDishDataToFragment(ingridientFragment, selectedDish);
+                sendDishDataToFragment(ingredientFragment, selectedDish);
             }
         }
     }

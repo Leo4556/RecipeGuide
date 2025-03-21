@@ -1,6 +1,5 @@
 package com.example.recipeguide;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class Ingredient_Dumplings_Fragment extends Fragment {
+public class Recipe_Fragment_Example extends Fragment {
 
 
 
@@ -24,12 +23,12 @@ public class Ingredient_Dumplings_Fragment extends Fragment {
         private String mParam1;
         private String mParam2;
 
-        public Ingredient_Dumplings_Fragment() {
+        public Recipe_Fragment_Example() {
             // Required empty public constructor
         }
 
-        public static Ingredient_Dumplings_Fragment newInstance(String param1, String param2) {
-            Ingredient_Dumplings_Fragment fragment = new Ingredient_Dumplings_Fragment();
+        public static Recipe_Fragment_Example newInstance(String param1, String param2) {
+            Recipe_Fragment_Example fragment = new Recipe_Fragment_Example();
             Bundle args = new Bundle();
             args.putString(ARG_PARAM1, param1);
             args.putString(ARG_PARAM2, param2);
@@ -50,19 +49,19 @@ public class Ingredient_Dumplings_Fragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             // Inflate the layout for this fragment
-            //return inflater.inflate(R.layout.fragment_ingredient__dumplings_, container, false);
-            View view = inflater.inflate(R.layout.fragment_ingredient__dumplings_, container, false);
+            //return inflater.inflate(R.layout.fragment_recipe__dumplings_, container, false);
+            View view = inflater.inflate(R.layout.fragment_recipe_example, container, false);
 
             // Получаем данные из аргументов
             Bundle bundle = getArguments();
             if (bundle != null) {
 
-                String ingredients = bundle.getString("dish_ingredients");
+                String recipe = bundle.getString("dish_recipe");
 
-                TextView ingredientsTextView = view.findViewById(R.id.ingredients_dish);
+                TextView recipeTextView = view.findViewById(R.id.recipe_dish);
 
                 // Отображаем данные
-                ingredientsTextView.setText(ingredients);
+                recipeTextView.setText(recipe);
             }
 
             return view;

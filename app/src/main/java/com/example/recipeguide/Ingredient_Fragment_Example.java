@@ -1,6 +1,5 @@
 package com.example.recipeguide;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class Recipe_Dumplings_Fragment extends Fragment {
+public class Ingredient_Fragment_Example extends Fragment {
 
 
 
@@ -24,21 +23,12 @@ public class Recipe_Dumplings_Fragment extends Fragment {
         private String mParam1;
         private String mParam2;
 
-        public Recipe_Dumplings_Fragment() {
+        public Ingredient_Fragment_Example() {
             // Required empty public constructor
         }
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ReceptFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        public static Recipe_Dumplings_Fragment newInstance(String param1, String param2) {
-            Recipe_Dumplings_Fragment fragment = new Recipe_Dumplings_Fragment();
+        public static Ingredient_Fragment_Example newInstance(String param1, String param2) {
+            Ingredient_Fragment_Example fragment = new Ingredient_Fragment_Example();
             Bundle args = new Bundle();
             args.putString(ARG_PARAM1, param1);
             args.putString(ARG_PARAM2, param2);
@@ -59,19 +49,19 @@ public class Recipe_Dumplings_Fragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             // Inflate the layout for this fragment
-            //return inflater.inflate(R.layout.fragment_recipe__dumplings_, container, false);
-            View view = inflater.inflate(R.layout.fragment_recipe__dumplings_, container, false);
+            //return inflater.inflate(R.layout.fragment_ingredient__dumplings_, container, false);
+            View view = inflater.inflate(R.layout.fragment_ingredient_example, container, false);
 
             // Получаем данные из аргументов
             Bundle bundle = getArguments();
             if (bundle != null) {
 
-                String recipe = bundle.getString("dish_recipe");
+                String ingredients = bundle.getString("dish_ingredients");
 
-                TextView recipeTextView = view.findViewById(R.id.recipe_dish);
+                TextView ingredientsTextView = view.findViewById(R.id.ingredients_dish);
 
                 // Отображаем данные
-                recipeTextView.setText(recipe);
+                ingredientsTextView.setText(ingredients);
             }
 
             return view;

@@ -13,7 +13,7 @@
         android:id="@+id/favourites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="50dp"
         android:alpha="1"
         android:fontFamily="@font/montserrat"
         android:text="Избранное"

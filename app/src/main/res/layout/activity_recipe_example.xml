@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:backgroundTint="#fff"
-    tools:context=".recipe_dumplings_activity">
+    tools:context=".recipe_example_activity">
 
     <ImageButton
         android:id="@+id/button_save_favorites"
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
-        android:text="Пельмени c укропом\n &quot;обыкновенные&quot;"
+        android:text="Название блюда"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="25sp"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_dish"
-        app:srcCompat="@drawable/dumplings_big_for_activity" />
+        app:srcCompat="@drawable/stub" />
 
 
 

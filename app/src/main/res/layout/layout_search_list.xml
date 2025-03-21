@@ -17,7 +17,7 @@
         android:backgroundTint="#00FFFFFF"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        tools:srcCompat="@drawable/dumplings" />
+        tools:srcCompat="@drawable/stub" />
 
     <TextView
         android:id="@+id/recipe_name"

@@ -2,13 +2,7 @@ package com.example.recipeguide;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.content.Context;
-import android.graphics.drawable.PictureDrawable;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +38,7 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void goRecipeDumplings(View view){
-        Intent intent = new Intent(this, recipe_dumplings_activity.class);
+        Intent intent = new Intent(this, recipe_example_activity.class);
         startActivity(intent);
     }
 
@@ -58,3 +52,8 @@ public class MainScreen extends AppCompatActivity {
 
 
 }
+
+//TODO Сделать рандомные рекомендации на MainScreen
+//TODO Изменения AddScreen: загрузка данных в бд, добавление фото, увеличить framelayout,
+// кнопку "сохранить" сделать как Button
+//TODO Реализовать Настройки

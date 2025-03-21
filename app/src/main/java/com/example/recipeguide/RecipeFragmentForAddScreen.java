@@ -8,14 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-public class RecipeFragment extends Fragment {
+public class RecipeFragmentForAddScreen extends Fragment {
 
     private EditText editTextRecipe;
 
@@ -24,7 +20,7 @@ public class RecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe_input, container, false);
 
         editTextRecipe = view.findViewById(R.id.recipe);
         ImageButton saveButton = view.findViewById(R.id.button_save);

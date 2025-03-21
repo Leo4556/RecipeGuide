@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Recipe_Dumplings_Fragment">
+    tools:context=".Recipe_Fragment_Example">
 
     <TextView
         android:id="@+id/recipe_dish"

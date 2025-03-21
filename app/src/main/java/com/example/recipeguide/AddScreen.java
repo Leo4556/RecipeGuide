@@ -20,7 +20,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,9 +33,6 @@ import androidx.fragment.app.FragmentTransaction;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
-import androidx.core.app.ActivityCompat;
-import androidx.annotation.NonNull;
-
 
 
 public class AddScreen extends AppCompatActivity {
@@ -46,10 +42,10 @@ public class AddScreen extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     public ImageView imageView;
     private ImageButton ingredients_button, recipe_button;
-    private IngredientsFragment ingredientsFragment = new IngredientsFragment();
+    private IngredientsFragmentForAddScreen ingredientsFragment = new IngredientsFragmentForAddScreen();
     private EditText recipeNameEditText;
     private EditText preparationTimeEditText;
-    private RecipeFragment recipeFragment;
+    private RecipeFragmentForAddScreen recipeFragmentForAddScreen;
     private ImageButton button_save;
 
     private EditText ingredients;
@@ -98,8 +94,8 @@ public class AddScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                RecipeFragment recipeFragment = new RecipeFragment();
-                setNewFragment(recipeFragment);
+                RecipeFragmentForAddScreen recipeFragmentForAddScreen = new RecipeFragmentForAddScreen();
+                setNewFragment(recipeFragmentForAddScreen);
 
             }
         });
@@ -110,8 +106,8 @@ public class AddScreen extends AppCompatActivity {
         preparationTimeEditText = findViewById(R.id.preparation_time);
         button_save = findViewById(R.id.button_save);
 
-        ingredientsFragment = new IngredientsFragment();
-        recipeFragment = new RecipeFragment();
+        ingredientsFragment = new IngredientsFragmentForAddScreen();
+        recipeFragmentForAddScreen = new RecipeFragmentForAddScreen();
 
        /* button_save.setOnClickListener(v -> {
             if (validateInputs()) {
@@ -147,7 +143,7 @@ public class AddScreen extends AppCompatActivity {
 
         boolean isActivityDataValid = !recipeName.isEmpty() && !preparationTime.isEmpty();
         boolean isIngredientsDataValid = ingredientsFragment != null && ingredientsFragment.validateInputs();
-        boolean isRecipeDataValid = recipeFragment != null && recipeFragment.validateInputs();
+        boolean isRecipeDataValid = recipeFragmentForAddScreen != null && recipeFragmentForAddScreen.validateInputs();
 
         return isActivityDataValid && isIngredientsDataValid && isRecipeDataValid;
     }
@@ -157,7 +153,7 @@ public class AddScreen extends AppCompatActivity {
         String recipeName = recipeNameEditText.getText().toString().trim();
         String preparationTime = preparationTimeEditText.getText().toString().trim();
         String ingredientsData = ingredientsFragment != null ? ingredientsFragment.getIngredientsData() : "";
-        String recipeData = recipeFragment != null ? recipeFragment.getRecipeData() : "";
+        String recipeData = recipeFragmentForAddScreen != null ? recipeFragmentForAddScreen.getRecipeData() : "";
 
         File path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
         if (path == null) {

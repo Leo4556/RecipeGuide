@@ -1,34 +1,20 @@
 package com.example.recipeguide;
 
-import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.jar.Attributes;
 
 import Data.DatabaseHandler;
-import Model.Recipe;
-import Utils.Util;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -57,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
 
             if (selectedDish != null) {
                 // Создаём Intent и передаём ID блюда
-                Intent intent = new Intent(getApplicationContext(), recipe_dumplings_activity.class);
+                Intent intent = new Intent(getApplicationContext(), recipe_example_activity.class);
                 intent.putExtra("dish_id", selectedDish.getId()); // Передаём ID блюда
                 startActivity(intent);
             }
@@ -75,6 +61,20 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+
+        //Статусбар белого цвета
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.WHITE);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     public void goAddScreen(View view){
