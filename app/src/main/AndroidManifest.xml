@@ -27,6 +27,7 @@
             android:exported="false" />
         <activity
             android:name=".AddScreen"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".FavouritesScreen"

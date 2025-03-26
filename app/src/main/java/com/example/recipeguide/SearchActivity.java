@@ -92,4 +92,8 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goOptions(View view){
+        Intent intent = new Intent(this, OptionsScreen.class);
+        startActivity(intent);
+    }
 }

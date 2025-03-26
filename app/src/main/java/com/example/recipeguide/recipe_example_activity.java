@@ -1,12 +1,15 @@
 package com.example.recipeguide;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,6 +48,10 @@ public class recipe_example_activity extends AppCompatActivity {
 
         saveFavoritesButton.setOnClickListener(view -> toggleFavoriteButton(dishId, saveFavoritesButton, databaseHelper));
         loadData(dishId, databaseHelper);
+
+        TextView nameDish = findViewById(R.id.name_dish);
+        nameDish.setMovementMethod(new ScrollingMovementMethod());
+        nameDish.post(() ->scrollingText(nameDish));
 
         Button ingredientButton = findViewById(R.id.ingredient);
         Button recipeButton = findViewById(R.id.recipe);
@@ -149,6 +156,35 @@ public class recipe_example_activity extends AppCompatActivity {
         fragment.setArguments(bundle);
     }
 
+    private void scrollingText(TextView nameDish){
+        if (isTextOverflowing(nameDish)) {
+            // Запускаем анимацию прокрутки вниз
+            float fullHeight = nameDish.getLineCount() * nameDish.getLineHeight() - nameDish.getHeight();
+            ObjectAnimator animatorDown = ObjectAnimator.ofInt(nameDish, "scrollY", 0, (int) fullHeight );
+            animatorDown.setDuration(nameDish.getLineCount() * 600);
+
+            // Анимация возврата вверх
+            ObjectAnimator animatorUp = ObjectAnimator.ofInt(nameDish, "scrollY", (int) fullHeight, 0);
+            animatorUp.setDuration(nameDish.getLineCount() * 600);
+
+            // Последовательное выполнение анимаций
+            animatorDown.start();
+            animatorDown.addListener(new android.animation.AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(android.animation.Animator animation) {
+                    animatorUp.start();
+                }
+            });
+        }
+    }
+
+    // Метод для проверки, выходит ли текст за пределы TextView
+    private boolean isTextOverflowing(TextView textView) {
+        Rect bounds = new Rect();
+        textView.getPaint().getTextBounds(textView.getText().toString(), 0, textView.getText().length(), bounds);
+        int textHeight = textView.getLineCount() * textView.getLineHeight();
+        return textHeight > textView.getHeight(); // Если высота текста больше TextView
+    }
     private void toggleFavoriteButton(int dishId, ImageButton saveFavoritesButton, DatabaseHandler databaseHandler) {
         if (isFavorite) {
             updateFavorite(dishId, databaseHandler, 0);
@@ -184,6 +220,11 @@ public class recipe_example_activity extends AppCompatActivity {
 
     public void goFavourites(View view){
         Intent intent = new Intent(this, FavouritesScreen.class);
+        startActivity(intent);
+    }
+
+    public void goOptions(View view){
+        Intent intent = new Intent(this, OptionsScreen.class);
         startActivity(intent);
     }
 
