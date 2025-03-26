@@ -29,6 +29,7 @@ public class recipe_example_activity extends AppCompatActivity {
 
 
     private Ingredient_Fragment_Example ingredientFragment = new Ingredient_Fragment_Example();
+    private Recipe_Fragment_Example receptFragment = new Recipe_Fragment_Example();
     private boolean isFavorite = false;
 
     @SuppressLint("WrongViewCast")
@@ -68,7 +69,6 @@ public class recipe_example_activity extends AppCompatActivity {
         recipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Recipe_Fragment_Example receptFragment = new Recipe_Fragment_Example();
                 if (dishId != -1) {
                     Recipe selectedDish = databaseHelper.getRecipe(dishId);
                     sendDishDataToFragment(receptFragment, selectedDish);
@@ -80,8 +80,6 @@ public class recipe_example_activity extends AppCompatActivity {
                 setNewFragment(receptFragment);
             }
         });
-
-
 
 
         //Статусбар белого цвета

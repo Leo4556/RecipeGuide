@@ -53,6 +53,10 @@ public class MainScreen extends AppCompatActivity {
 
     }
 
+    public void goHome(View view){
+        Intent intent = new Intent(this, MainScreen.class);
+        startActivity(intent);
+    }
 
     public void goAddScreen(View view){
         Intent intent = new Intent(this, AddScreen.class);
@@ -64,17 +68,16 @@ public class MainScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goRecipeDumplings(View view){
-        Intent intent = new Intent(this, recipe_example_activity.class);
-        startActivity(intent);
-    }
-
 
     public void goToSearch(View view) {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 
+    public void goOptions(View view){
+        Intent intent = new Intent(this, OptionsScreen.class);
+        startActivity(intent);
+    }
 
 
 

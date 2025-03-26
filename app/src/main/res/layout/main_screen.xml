@@ -116,6 +116,7 @@
             android:layout_weight="1"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="shesterenka"
+            android:onClick="goOptions"
             app:srcCompat="@drawable/button_gear" />
     </LinearLayout>
 

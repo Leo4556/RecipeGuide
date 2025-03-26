@@ -13,11 +13,7 @@ import android.widget.ImageButton;
 
 public class IngredientsFragmentForAddScreen extends Fragment {
 
-
-
     private EditText editTextIngredients;
-
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -27,11 +23,7 @@ public class IngredientsFragmentForAddScreen extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ingredients_input, container, false);
 
         editTextIngredients = view.findViewById(R.id.ingredients);
-        ImageButton saveButton = view.findViewById(R.id.button_save);
         return view;}
-
-//        saveButton.setOnClickListener(v -> saveData());
-
 
         public boolean validateInputs() {
             String ingredients = editTextIngredients.getText().toString().trim();

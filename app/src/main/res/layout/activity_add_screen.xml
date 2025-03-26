@@ -8,14 +8,15 @@
     android:background="#fff"
     android:backgroundTint="#fff"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".AddScreen">
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="370dp"
-        android:layout_height="402dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,23 +24,34 @@
 
         <!-- Название рецепта с кнопками назад и добавить в избранное -->
         <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
 
 
+            <ImageButton
+                android:id="@+id/button_back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:contentDescription="button_back_arrow"
+                android:onClick="goBack"
+                app:srcCompat="@drawable/button_back_arrow" />
+
             <EditText
                 android:id="@+id/recipe_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:layout_marginEnd="50dp"
+                android:layout_toEndOf="@+id/button_back_arrow"
                 android:background="@android:color/darker_gray"
                 android:fontFamily="@font/montserrat"
                 android:hint="Введите название"
-                android:padding="11dp" />
+                android:padding="8dp" />
 
 
         </RelativeLayout>
@@ -48,15 +60,17 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="10dp">
 
             <ImageButton
                 android:id="@+id/button_add_photo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:backgroundTint="#FFFFFF"
                 android:contentDescription="@string/app_name"
+                android:clipToOutline="true"
+                android:background="@drawable/rounded_corners_image"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/button_add_photo" />
         </FrameLayout>
@@ -65,13 +79,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginHorizontal="15dp"
             android:orientation="horizontal">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
+                android:textSize="17dp"
                 android:text="Время приготовления:" />
 
             <EditText
@@ -83,18 +100,19 @@
                 android:fontFamily="@font/montserrat"
                 android:hint="Введите время"
                 android:inputType="number"
-                android:padding="11dp" />
+                android:textSize="16dp"
+                android:padding="7dp" />
         </LinearLayout>
 
         <!-- Кнопки ингредиентов и рецепта -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="5dp"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/ingredients_button"
+                android:id="@+id/ingredient"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
@@ -111,7 +129,7 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
-                android:id="@+id/recipe_button"
+                android:id="@+id/recipe"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
@@ -136,7 +154,8 @@
         android:id="@+id/frame_layout_ingredients"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/button_save"
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,21 +166,21 @@
     </FrameLayout>
 
 
-
-    <ImageButton
+    <Button
         android:id="@+id/button_save"
-        android:layout_width="141dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
-        android:background="#FFDDAF"
-        android:backgroundTint="#00FFFFFF"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/rounded_button_fragment"
         android:contentDescription="@string/app_name"
         android:fontFamily="@font/montserrat"
-        android:onClick="goTea"
-        android:src="@drawable/button_save"
         android:text="Сохранить"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textColorLink="#FBDAAC"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/panel"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
@@ -170,8 +189,7 @@
         android:id="@id/panel"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginHorizontal="15dp"
         android:orientation="horizontal"
         android:background="@drawable/rounded_linear_layout"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -218,5 +236,7 @@
             android:contentDescription="shesterenka"
             app:srcCompat="@drawable/button_gear" />
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
