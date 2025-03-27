@@ -11,7 +11,11 @@ import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
@@ -27,6 +31,12 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         listView = findViewById(R.id.listView);
         searchView = findViewById(R.id.search_field);
@@ -63,33 +73,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        setAdaptiveStatusBar();
-
     }
 
-    public void setAdaptiveStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-            // Проверяем текущую тему
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                // Тёмная тема
-                window.setStatusBarColor(getResources().getColor(R.color.background_dark_theam)); // Цвет статус-бара для темной темы
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Белый текст на темной теме
-                }
-            } else {
-                // Светлая тема
-                window.setStatusBarColor(Color.WHITE); // Цвет статус-бара для светлой темы
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Черный текст на светлой теме
-                }
-            }
-        }
-    }
 
     public void goAddScreen(View view){
         Intent intent = new Intent(this, AddScreen.class);
