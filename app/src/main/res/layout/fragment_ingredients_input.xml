@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/montserrat"
         android:text="Введите ингредиенты"
         android:textSize="25sp"
         />
@@ -25,23 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="10"
-        android:fontFamily="@font/montserrat"
+        android:hint="Ваши ингредиенты"
         android:inputType="textMultiLine"
-        android:hint="Ваши ингредиенты" />
+        tools:ignore="TouchTargetSizeCheck" />
 
 
-    <!--<ImageButton
-        android:id="@+id/button_save"
-        android:layout_width="139dp"
-        android:layout_height="53dp"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="275dp"
-        android:background="#FFDDAF"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/app_name"
-        android:fontFamily="@font/montserrat"
-        android:onClick="saveData"
-        android:src="@drawable/button_save"
-        android:text="Сохранить"
-        android:textColorLink="#FBDAAC" />-->
 </FrameLayout>

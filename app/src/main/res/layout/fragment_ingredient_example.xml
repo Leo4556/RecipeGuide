@@ -9,7 +9,6 @@
         android:id="@+id/ingredients_dish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
         android:text="- Пельмени&#xA;- Укроп (по вкусу)&#xA;- Вода&#xA;- Соль (по вкусу)&#xA;- Лавровый лист 1 шт.&#xA;- Свежемолотый перец (по вкусу)"
         android:textSize="18dp"
         android:textStyle="bold" />

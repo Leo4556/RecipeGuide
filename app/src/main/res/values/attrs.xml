@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Определяем пользовательский атрибут -->
+    <attr name="buttonHomeIcon" format="reference" />
+    <attr name="buttonPlusIcon" format="reference" />
+    <attr name="buttonHeartIcon" format="reference" />
+    <attr name="buttonGearIcon" format="reference" />
+    <attr name="buttonSearchBarIcon" format="reference" />
+    <attr name="buttonBackIcon" format="reference" />
+</resources>

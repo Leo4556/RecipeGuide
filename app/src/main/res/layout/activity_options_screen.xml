@@ -5,8 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:backgroundTint="#fff"
     android:contentDescription="serdce"
     android:hapticFeedbackEnabled="false"
     tools:context=".OptionsScreen">
@@ -17,9 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/montserrat"
         android:text="Настройки"
-        android:textColor="#000"
         android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -46,7 +42,6 @@
             android:layout_weight="0"
             android:alpha="255"
             android:text="Уведомления"
-            android:textColor="@color/black"
             android:textSize="24sp"/>
 
         <Button
@@ -55,14 +50,9 @@
             android:layout_height="35dp"
             android:layout_margin="18dp"
             android:layout_weight="0"
-            android:background="@drawable/rounded_button_fragment"
             android:contentDescription="@string/app_name"
-            android:fontFamily="@font/montserrat"
             android:text="Вкл"
-            android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,17 +64,10 @@
             android:layout_width="60dp"
             android:layout_height="35dp"
             android:layout_margin="18dp"
-
-
             android:layout_weight="0"
-            android:background="@drawable/rounded_button_fragment"
             android:contentDescription="@string/app_name"
-            android:fontFamily="@font/montserrat"
             android:text="Выкл"
-            android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,14 +85,9 @@
         android:layout_height="35dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="@drawable/rounded_button_fragment"
         android:contentDescription="@string/app_name"
-        android:fontFamily="@font/montserrat"
         android:text="Поддержка"
-        android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,14 +100,9 @@
         android:layout_height="60dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="@drawable/rounded_button_fragment"
         android:contentDescription="@string/app_name"
-        android:fontFamily="@font/montserrat"
         android:text="Политика конфиденциальности"
-        android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,14 +114,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:fontFamily="@font/montserrat"
         android:text="v0.1.1\nПриложение разработано в учебных целях"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/authors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-
-
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText" />
 
@@ -157,7 +127,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:fontFamily="@font/montserrat"
         android:text="Авторы: Гаманович А.А, Сенкевич Р.А,\nТокарчук В.Ю"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -167,13 +136,12 @@
         tools:ignore="HardcodedText" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rounded_linear_layout"
+        android:layout_marginHorizontal="15dp"
         android:orientation="horizontal"
+        android:background="@drawable/rounded_linear_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -187,9 +155,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
             android:onClick="goHome"
-            app:srcCompat="@drawable/button_home" />
-
-
+            app:srcCompat="?attr/buttonHomeIcon" />
 
         <ImageButton
             android:id="@+id/button_plus"
@@ -199,7 +165,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="plus"
             android:onClick="goAddScreen"
-            app:srcCompat="@drawable/button_plus" />
+            app:srcCompat="?attr/buttonPlusIcon" />
 
         <ImageButton
             android:id="@+id/button_heart"
@@ -209,7 +175,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="serdce"
             android:onClick="goFavourites"
-            app:srcCompat="@drawable/button_heart" />
+            app:srcCompat="?attr/buttonHeartIcon" />
 
         <ImageButton
             android:id="@+id/button_gear"
@@ -218,7 +184,8 @@
             android:layout_weight="1"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="shesterenka"
-            app:srcCompat="@drawable/button_gear" />
+            android:onClick="goOptions"
+            app:srcCompat="?attr/buttonGearIcon" />
     </LinearLayout>
 
 

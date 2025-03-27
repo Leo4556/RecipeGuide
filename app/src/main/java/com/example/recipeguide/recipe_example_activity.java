@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,6 +34,7 @@ public class recipe_example_activity extends AppCompatActivity {
 
     private Ingredient_Fragment_Example ingredientFragment = new Ingredient_Fragment_Example();
     private Recipe_Fragment_Example receptFragment = new Recipe_Fragment_Example();
+    TypedValue typedValue = new TypedValue();
     private boolean isFavorite = false;
 
     @SuppressLint("WrongViewCast")
@@ -131,7 +133,8 @@ public class recipe_example_activity extends AppCompatActivity {
 
                 dishCookingTime.setText("Время приготовления: " + selectedDish.getCookingTime() + " мин");
                 if(selectedDish.getIsFavorite() == 0){
-                    dishFavorite.setImageResource(R.drawable.button_heart);
+                    getTheme().resolveAttribute(R.attr.buttonHeartIcon, typedValue, true);
+                    dishFavorite.setImageResource(typedValue.resourceId);
                 }else {
                     dishFavorite.setImageResource(R.drawable.button_heart_red);
                 }
@@ -188,8 +191,11 @@ public class recipe_example_activity extends AppCompatActivity {
     private void toggleFavoriteButton(int dishId, ImageButton saveFavoritesButton, DatabaseHandler databaseHandler) {
         if (isFavorite) {
             updateFavorite(dishId, databaseHandler, 0);
-            // Устанавливаем "прозрачное сердце"
-            saveFavoritesButton.setImageResource(R.drawable.button_heart);
+
+            // Получаем ресурс атрибута темы
+            getTheme().resolveAttribute(R.attr.buttonHeartIcon, typedValue, true);
+            // Устанавливаем ресурс в ImageButton
+            saveFavoritesButton.setImageResource(typedValue.resourceId);
             isFavorite = false;
         } else {
             updateFavorite(dishId, databaseHandler, 1);
@@ -208,6 +214,7 @@ public class recipe_example_activity extends AppCompatActivity {
             }
         }
     }
+
     public void goAddScreen(View view){
         Intent intent = new Intent(this, AddScreen.class);
         startActivity(intent);

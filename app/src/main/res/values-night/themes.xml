@@ -1,15 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Основные параметры для светлой темы -->
-        <item name="colorPrimary">@color/main_dark_theam</item>
-        <item name="colorPrimaryDark">@color/main_dark_theam2</item>
-        <item name="color">@color/background_add_screen</item>
+        <item name="android:colorPrimary">@color/main_dark_theam</item>
+        <item name="android:colorPrimaryDark">@color/main_dark_theam2</item>
         <item name="android:windowBackground">@color/background_dark_theam</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/text_time_dark</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:color">@color/main_dark_theam</item>
+        <item name="buttonHomeIcon">@drawable/button_home_dark</item>
+        <item name="buttonPlusIcon">@drawable/button_plus_dark</item>
+        <item name="buttonHeartIcon">@drawable/button_heart_dark</item>
+        <item name="buttonGearIcon">@drawable/button_gear_dark</item>
+        <item name="buttonSearchBarIcon">@drawable/button_search_bar_dark</item>
+        <item name="buttonBackIcon">@drawable/button_back_arrow_dark</item>
+        <item name="buttonStyle">@style/CustomButton</item>
     </style>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.RecipeGuide" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+    <style name="CustomButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/rounded_button_fragment</item>
+        <item name="android:gravity">center</item>
     </style>
+
+    <style name="DarkerColor">
+        <item name="android:textColor">@color/text_time_dark</item>
+    </style>
+    <style name="DarkerColor.CustomEditText">
+        <item name="android:background">@color/background_add_screen</item>
+    </style>
+
 </resources>

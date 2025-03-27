@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:backgroundTint="#fff"
+    style="@style/AppTheme"
     tools:context=".FavouritesScreen">
 
     <TextView
@@ -15,9 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:alpha="1"
-        android:fontFamily="@font/montserrat"
         android:text="Избранное"
-        android:textColor="#000"
         android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -42,8 +39,7 @@
         android:id="@id/panel"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginHorizontal="15dp"
         android:orientation="horizontal"
         android:background="@drawable/rounded_linear_layout"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,7 +55,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
             android:onClick="goHome"
-            app:srcCompat="@drawable/button_home" />
+            app:srcCompat="?attr/buttonHomeIcon" />
 
         <ImageButton
             android:id="@+id/button_plus"
@@ -69,7 +65,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="plus"
             android:onClick="goAddScreen"
-            app:srcCompat="@drawable/button_plus" />
+            app:srcCompat="?attr/buttonPlusIcon" />
 
         <ImageButton
             android:id="@+id/button_heart"
@@ -79,7 +75,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="serdce"
             android:onClick="goFavourites"
-            app:srcCompat="@drawable/button_heart" />
+            app:srcCompat="?attr/buttonHeartIcon" />
 
         <ImageButton
             android:id="@+id/button_gear"
@@ -89,7 +85,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="shesterenka"
             android:onClick="goOptions"
-            app:srcCompat="@drawable/button_gear" />
+            app:srcCompat="?attr/buttonGearIcon" />
     </LinearLayout>
 
 

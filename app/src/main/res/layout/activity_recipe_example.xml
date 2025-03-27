@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/AppTheme"
     tools:context=".recipe_example_activity">
 
 
@@ -17,14 +18,13 @@
         android:onClick="goBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/button_back_arrow" />
+        app:srcCompat="?attr/buttonBackIcon"/>
 
 
     <TextView
         android:id="@+id/name_dish"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
         android:text="Название блюда"
         android:textAlignment="center"
         android:textSize="25sp"
@@ -46,7 +46,7 @@
         android:contentDescription="button_save_favorites"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/button_heart" />
+        app:srcCompat="?attr/buttonHeartIcon" />
 
     <ImageView
         android:id="@+id/image_dish"
@@ -70,7 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="5dp"
         android:orientation="horizontal"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Cooking_time">
@@ -81,14 +80,9 @@
             android:layout_height="35dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_button_fragment"
             android:contentDescription="@string/app_name"
-            android:fontFamily="@font/montserrat"
             android:text="Ингредиенты"
-            android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />
 
@@ -98,14 +92,9 @@
             android:layout_height="35dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_button_fragment"
             android:contentDescription="@string/app_name"
-            android:fontFamily="@font/montserrat"
             android:text="Рецепт"
-            android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />
 
@@ -138,21 +127,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/montserrat"
         android:text="Время приготовления: XX мин"
-        android:textColor="@color/text_time"
         android:textSize="18sp"
+        style="@style/DarkerColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_dish" />
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:layout_marginHorizontal="15dp"
-        android:background="@drawable/rounded_linear_layout"
         android:orientation="horizontal"
+        android:background="@drawable/rounded_linear_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -166,7 +154,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
             android:onClick="goHome"
-            app:srcCompat="@drawable/button_home" />
+            app:srcCompat="?attr/buttonHomeIcon" />
 
         <ImageButton
             android:id="@+id/button_plus"
@@ -176,7 +164,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="plus"
             android:onClick="goAddScreen"
-            app:srcCompat="@drawable/button_plus" />
+            app:srcCompat="?attr/buttonPlusIcon" />
 
         <ImageButton
             android:id="@+id/button_heart"
@@ -186,7 +174,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="serdce"
             android:onClick="goFavourites"
-            app:srcCompat="@drawable/button_heart" />
+            app:srcCompat="?attr/buttonHeartIcon" />
 
         <ImageButton
             android:id="@+id/button_gear"
@@ -196,8 +184,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="shesterenka"
             android:onClick="goOptions"
-            app:srcCompat="@drawable/button_gear" />
+            app:srcCompat="?attr/buttonGearIcon" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

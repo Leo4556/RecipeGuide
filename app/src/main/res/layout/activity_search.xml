@@ -6,24 +6,21 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:backgroundTint="#fff"
+    style="@style/AppTheme"
     tools:context=".SearchActivity">
 
     <SearchView
         android:id="@+id/search_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Поиск..."
         android:inputType="text"
-        android:background="#FFDDAF"
+        android:background="?android:attr/colorPrimary"
         android:focusable="true"
         android:clickable="true"
         android:iconifiedByDefault="false"
-        android:textColor="#000000"
-        android:textColorHint="#80000000"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,9 +30,8 @@
         android:id="@+id/listView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
@@ -45,13 +41,12 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rounded_linear_layout"
+        android:layout_marginHorizontal="15dp"
         android:orientation="horizontal"
+        android:background="@drawable/rounded_linear_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -65,7 +60,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home"
             android:onClick="goHome"
-            app:srcCompat="@drawable/button_home" />
+            app:srcCompat="?attr/buttonHomeIcon" />
 
         <ImageButton
             android:id="@+id/button_plus"
@@ -75,7 +70,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="plus"
             android:onClick="goAddScreen"
-            app:srcCompat="@drawable/button_plus" />
+            app:srcCompat="?attr/buttonPlusIcon" />
 
         <ImageButton
             android:id="@+id/button_heart"
@@ -85,7 +80,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="serdce"
             android:onClick="goFavourites"
-            app:srcCompat="@drawable/button_heart" />
+            app:srcCompat="?attr/buttonHeartIcon" />
 
         <ImageButton
             android:id="@+id/button_gear"
@@ -95,7 +90,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="shesterenka"
             android:onClick="goOptions"
-            app:srcCompat="@drawable/button_gear" />
+            app:srcCompat="?attr/buttonGearIcon" />
     </LinearLayout>
 
 
