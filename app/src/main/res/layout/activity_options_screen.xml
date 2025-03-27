@@ -27,114 +27,94 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/options">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/notifications"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+            <Switch
+                android:id="@+id/switch_theme"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:text="Темная тема"
+                android:textSize="24sp"
+                android:alpha="255"
+                android:textColor="@color/black"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="center"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="12dp">
+
+            <Switch
+                android:id="@+id/switch_notification"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="0"
+                android:alpha="255"
+                android:text="Уведомления"
+                android:textSize="24sp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/support"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_fragment"
+            android:contentDescription="@string/app_name"
+            android:fontFamily="@font/montserrat"
+            android:text="Поддержка"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="0"
-            android:alpha="255"
-            android:text="Уведомления"
-            android:textColor="@color/black"
-            android:textSize="24sp"/>
+            tools:ignore="TouchTargetSizeCheck" />
 
         <Button
-            android:id="@+id/on"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
-            android:layout_margin="18dp"
-            android:layout_weight="0"
+            android:id="@+id/politicsConfidence"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded_button_fragment"
             android:contentDescription="@string/app_name"
             android:fontFamily="@font/montserrat"
-            android:text="Вкл"
+            android:text="Политика конфиденциальности"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+            android:layout_gravity="center"
             tools:ignore="TouchTargetSizeCheck" />
-
-        <Button
-            android:id="@+id/off"
-            android:layout_width="60dp"
-            android:layout_height="35dp"
-            android:layout_margin="18dp"
-
-
-            android:layout_weight="0"
-            android:background="@drawable/rounded_button_fragment"
-            android:contentDescription="@string/app_name"
-            android:fontFamily="@font/montserrat"
-            android:text="Выкл"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            tools:ignore="TouchTargetSizeCheck" />
-
-
     </LinearLayout>
 
-
-
-    <Button
-        android:id="@+id/support"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/rounded_button_fragment"
-        android:contentDescription="@string/app_name"
-        android:fontFamily="@font/montserrat"
-        android:text="Поддержка"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <Button
-        android:id="@+id/politicsConfidence"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/rounded_button_fragment"
-        android:contentDescription="@string/app_name"
-        android:fontFamily="@font/montserrat"
-        android:text="Политика конфиденциальности"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/support"
-        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/version"
@@ -157,12 +137,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat"
         android:text="Авторы: Гаманович А.А, Сенкевич Р.А,\nТокарчук В.Ю"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText" />
 
@@ -188,7 +168,6 @@
             android:contentDescription="home"
             android:onClick="goHome"
             app:srcCompat="@drawable/button_home" />
-
 
 
         <ImageButton
@@ -220,8 +199,6 @@
             android:contentDescription="shesterenka"
             app:srcCompat="@drawable/button_gear" />
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
