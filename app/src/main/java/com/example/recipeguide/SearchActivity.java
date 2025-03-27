@@ -1,6 +1,7 @@
 package com.example.recipeguide;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,18 +63,31 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        setAdaptiveStatusBar();
 
+    }
 
-        //Статусбар белого цвета
+    public void setAdaptiveStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.WHITE);
-        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            // Проверяем текущую тему
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                // Тёмная тема
+                window.setStatusBarColor(getResources().getColor(R.color.background_dark_theam)); // Цвет статус-бара для темной темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Белый текст на темной теме
+                }
+            } else {
+                // Светлая тема
+                window.setStatusBarColor(Color.WHITE); // Цвет статус-бара для светлой темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Черный текст на светлой теме
+                }
+            }
         }
     }
 

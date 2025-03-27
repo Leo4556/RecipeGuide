@@ -3,6 +3,7 @@ package com.example.recipeguide;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -75,7 +76,7 @@ public class AddScreen extends AppCompatActivity {
         btnAddImage = findViewById(R.id.button_add_photo);
         btnAddImage.setOnClickListener(v -> openImageChooser());
         recipeNameEditText.setMovementMethod(new ScrollingMovementMethod());
-        recipeNameEditText.post(() ->scrollingText(recipeNameEditText));
+        recipeNameEditText.post(() -> scrollingText(recipeNameEditText));
 
         Button buttonSave = findViewById(R.id.button_save);
         buttonSave.setOnClickListener(v -> saveImageToInternalStorage(databaseHelper));
@@ -85,7 +86,6 @@ public class AddScreen extends AppCompatActivity {
 
         setNewFragment(ingredientFragment);
         ingredientButton.setBackgroundResource(R.drawable.rounded_button_focused);
-
 
 
         ingredientButton.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +123,33 @@ public class AddScreen extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+
+        setAdaptiveStatusBar();
     }
 
+    public void setAdaptiveStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            // Проверяем текущую тему
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                // Тёмная тема
+                window.setStatusBarColor(getResources().getColor(R.color.background_dark_theam)); // Цвет статус-бара для темной темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Белый текст на темной теме
+                }
+            } else {
+                // Светлая тема
+                window.setStatusBarColor(Color.WHITE); // Цвет статус-бара для светлой темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Черный текст на светлой теме
+                }
+            }
+        }
+    }
 
 
     // Открытие галереи для выбора изображения
@@ -134,7 +159,7 @@ public class AddScreen extends AppCompatActivity {
         imagePickerLauncher.launch(Intent.createChooser(intent, "Выберите изображение"));
     }
 
-    private void photoFromGallery(){
+    private void photoFromGallery() {
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -166,7 +191,7 @@ public class AddScreen extends AppCompatActivity {
 
     }
 
-    private void saveData(DatabaseHandler databaseHandler){
+    private void saveData(DatabaseHandler databaseHandler) {
         String recipeName = recipeNameEditText.getText().toString().trim();
         int preparationTime = Integer.parseInt(preparationTimeEditText.getText().toString().trim());
         String ingredientsData = ingredientFragment != null ? ingredientFragment.getIngredientsData() : "";
@@ -188,6 +213,7 @@ public class AddScreen extends AppCompatActivity {
 
         databaseHandler.addRecipe(recipe);
     }
+
     private boolean validateInputs() {
         String recipeName = recipeNameEditText.getText().toString().trim();
         String preparationTime = preparationTimeEditText.getText().toString().trim();
@@ -200,11 +226,11 @@ public class AddScreen extends AppCompatActivity {
         return isActivityDataValid && isIngredientsDataValid && isRecipeDataValid && isImageDataValid;
     }
 
-    private void scrollingText(EditText nameDish){
+    private void scrollingText(EditText nameDish) {
         if (isTextOverflowing(nameDish)) {
             // Запускаем анимацию прокрутки вниз
             float fullHeight = nameDish.getLineCount() * nameDish.getLineHeight() - nameDish.getHeight();
-            ObjectAnimator animatorDown = ObjectAnimator.ofInt(nameDish, "scrollY", 0, (int) fullHeight );
+            ObjectAnimator animatorDown = ObjectAnimator.ofInt(nameDish, "scrollY", 0, (int) fullHeight);
             animatorDown.setDuration(nameDish.getLineCount() * 600);
 
             // Анимация возврата вверх
@@ -238,27 +264,27 @@ public class AddScreen extends AppCompatActivity {
     }
 
 
-    public void goAddScreen(View view){
+    public void goAddScreen(View view) {
         Intent intent = new Intent(this, AddScreen.class);
         startActivity(intent);
     }
 
-    public void goHome(View view){
+    public void goHome(View view) {
         Intent intent = new Intent(this, MainScreen.class);
         startActivity(intent);
     }
 
-    public void goFavourites(View view){
+    public void goFavourites(View view) {
         Intent intent = new Intent(this, FavouritesScreen.class);
         startActivity(intent);
     }
 
-    public void goOptions(View view){
+    public void goOptions(View view) {
         Intent intent = new Intent(this, OptionsScreen.class);
         startActivity(intent);
     }
 
-    public void goBack(View view){
+    public void goBack(View view) {
         finish();
     }
 

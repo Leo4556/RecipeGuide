@@ -1,11 +1,13 @@
 package com.example.recipeguide;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.ListView;
 
@@ -46,40 +48,51 @@ public class FavouritesScreen extends AppCompatActivity {
             }
         });
 
+        setAdaptiveStatusBar();
 
 
+    }
 
-
-        //Статусбар белого цвета
+    public void setAdaptiveStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.WHITE);
-        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            // Проверяем текущую тему
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                // Тёмная тема
+                window.setStatusBarColor(getResources().getColor(R.color.background_dark_theam)); // Цвет статус-бара для темной темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Белый текст на темной теме
+                }
+            } else {
+                // Светлая тема
+                window.setStatusBarColor(Color.WHITE); // Цвет статус-бара для светлой темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Черный текст на светлой теме
+                }
+            }
         }
-
     }
 
-    public void goAddScreen(View view){
+    public void goAddScreen(View view) {
         Intent intent = new Intent(this, AddScreen.class);
         startActivity(intent);
     }
 
-    public void goHome(View view){
+    public void goHome(View view) {
         Intent intent = new Intent(this, MainScreen.class);
         startActivity(intent);
     }
 
-    public void goFavourites(View view){
+    public void goFavourites(View view) {
         Intent intent = new Intent(this, FavouritesScreen.class);
         startActivity(intent);
     }
 
-    public void goOptions(View view){
+    public void goOptions(View view) {
         Intent intent = new Intent(this, OptionsScreen.class);
         startActivity(intent);
     }

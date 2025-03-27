@@ -3,6 +3,7 @@ package com.example.recipeguide;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -53,7 +54,7 @@ public class recipe_example_activity extends AppCompatActivity {
 
         TextView nameDish = findViewById(R.id.name_dish);
         nameDish.setMovementMethod(new ScrollingMovementMethod());
-        nameDish.post(() ->scrollingText(nameDish));
+        nameDish.post(() -> scrollingText(nameDish));
 
         Button ingredientButton = findViewById(R.id.ingredient);
         Button recipeButton = findViewById(R.id.recipe);
@@ -91,21 +92,35 @@ public class recipe_example_activity extends AppCompatActivity {
         });
 
 
-        //Статусбар белого цвета
+        setAdaptiveStatusBar();
+
+    }
+
+    public void setAdaptiveStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.WHITE);
-        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            // Проверяем текущую тему
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                // Тёмная тема
+                window.setStatusBarColor(getResources().getColor(R.color.background_dark_theam)); // Цвет статус-бара для темной темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Белый текст на темной теме
+                }
+            } else {
+                // Светлая тема
+                window.setStatusBarColor(Color.WHITE); // Цвет статус-бара для светлой темы
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // Черный текст на светлой теме
+                }
+            }
         }
-
     }
 
-    private void loadData(int dishId, DatabaseHandler databaseHelper){
+    private void loadData(int dishId, DatabaseHandler databaseHelper) {
         if (dishId != -1) {
             // Здесь можно использовать dishId для загрузки данных из базы
 
@@ -132,16 +147,17 @@ public class recipe_example_activity extends AppCompatActivity {
                 }
 
                 dishCookingTime.setText("Время приготовления: " + selectedDish.getCookingTime() + " мин");
-                if(selectedDish.getIsFavorite() == 0){
+                if (selectedDish.getIsFavorite() == 0) {
                     getTheme().resolveAttribute(R.attr.buttonHeartIcon, typedValue, true);
                     dishFavorite.setImageResource(typedValue.resourceId);
-                }else {
+                } else {
                     dishFavorite.setImageResource(R.drawable.button_heart_red);
                 }
                 sendDishDataToFragment(ingredientFragment, selectedDish);
             }
         }
     }
+
     private void setNewFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, fragment);
@@ -159,11 +175,11 @@ public class recipe_example_activity extends AppCompatActivity {
         fragment.setArguments(bundle);
     }
 
-    private void scrollingText(TextView nameDish){
+    private void scrollingText(TextView nameDish) {
         if (isTextOverflowing(nameDish)) {
             // Запускаем анимацию прокрутки вниз
             float fullHeight = nameDish.getLineCount() * nameDish.getLineHeight() - nameDish.getHeight();
-            ObjectAnimator animatorDown = ObjectAnimator.ofInt(nameDish, "scrollY", 0, (int) fullHeight );
+            ObjectAnimator animatorDown = ObjectAnimator.ofInt(nameDish, "scrollY", 0, (int) fullHeight);
             animatorDown.setDuration(nameDish.getLineCount() * 600);
 
             // Анимация возврата вверх
@@ -188,6 +204,7 @@ public class recipe_example_activity extends AppCompatActivity {
         int textHeight = textView.getLineCount() * textView.getLineHeight();
         return textHeight > textView.getHeight(); // Если высота текста больше TextView
     }
+
     private void toggleFavoriteButton(int dishId, ImageButton saveFavoritesButton, DatabaseHandler databaseHandler) {
         if (isFavorite) {
             updateFavorite(dishId, databaseHandler, 0);
@@ -205,37 +222,37 @@ public class recipe_example_activity extends AppCompatActivity {
         }
     }
 
-    private void updateFavorite(int dishId, DatabaseHandler databaseHandler, int isFavorite){
-        if(dishId != -1){
+    private void updateFavorite(int dishId, DatabaseHandler databaseHandler, int isFavorite) {
+        if (dishId != -1) {
             Recipe selectedDish = databaseHandler.getRecipe(dishId);
-            if (selectedDish != null){
+            if (selectedDish != null) {
                 selectedDish.setIsFavorite(isFavorite);
                 databaseHandler.updateRecipe(selectedDish);
             }
         }
     }
 
-    public void goAddScreen(View view){
+    public void goAddScreen(View view) {
         Intent intent = new Intent(this, AddScreen.class);
         startActivity(intent);
     }
 
-    public void goHome(View view){
+    public void goHome(View view) {
         Intent intent = new Intent(this, MainScreen.class);
         startActivity(intent);
     }
 
-    public void goFavourites(View view){
+    public void goFavourites(View view) {
         Intent intent = new Intent(this, FavouritesScreen.class);
         startActivity(intent);
     }
 
-    public void goOptions(View view){
+    public void goOptions(View view) {
         Intent intent = new Intent(this, OptionsScreen.class);
         startActivity(intent);
     }
 
-    public void goBack(View view){
+    public void goBack(View view) {
         finish();
     }
 
