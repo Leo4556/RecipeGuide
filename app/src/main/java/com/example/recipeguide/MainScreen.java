@@ -1,13 +1,16 @@
 package com.example.recipeguide;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -31,13 +34,22 @@ public class MainScreen extends AppCompatActivity {
             return insets;
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        boolean nightMode = sharedPreferences.getBoolean("night", false);
+
+        if (nightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         listView = findViewById(R.id.listView);
 
         DatabaseHandler databaseHelper = new DatabaseHandler(this);
         ArrayList<Dish> dishes = databaseHelper.getRecommendedRecipe(this);
-        DishAdapter adapter = new DishAdapter(this, dishes); // Создаём адаптер
+        DishAdapter adapter = new DishAdapter(this, dishes);
 
-        listView.setAdapter(adapter); // Устанавливаем адаптер
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             // Получаем выбранное блюдо

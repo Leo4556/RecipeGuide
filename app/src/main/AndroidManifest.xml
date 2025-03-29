@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/logo_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:configChanges="uiMode"
         tools:targetApi="31">
         <activity
             android:name=".OptionsScreen"
