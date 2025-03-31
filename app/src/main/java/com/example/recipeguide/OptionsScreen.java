@@ -64,6 +64,10 @@ public class OptionsScreen extends AppCompatActivity {
 
     }
 
+    public static boolean getCurrentTheme(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("night", false);
+    }
 
     public void goHome(View view) {
         Intent intent = new Intent(this, MainScreen.class);
