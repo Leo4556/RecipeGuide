@@ -65,17 +65,17 @@ public class MainScreen extends AppCompatActivity {
 
     }
 
-    public void goHome(View view){
+    public void goHome(View view) {
         Intent intent = new Intent(this, MainScreen.class);
         startActivity(intent);
     }
 
-    public void goAddScreen(View view){
+    public void goAddScreen(View view) {
         Intent intent = new Intent(this, AddScreen.class);
         startActivity(intent);
     }
 
-    public void goFavourites(View view){
+    public void goFavourites(View view) {
         Intent intent = new Intent(this, FavouritesScreen.class);
         startActivity(intent);
     }
@@ -85,16 +85,10 @@ public class MainScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goOptions(View view){
+    public void goOptions(View view) {
         Intent intent = new Intent(this, OptionsScreen.class);
         startActivity(intent);
     }
 
 
-
 }
-
-//TODO Сделать рандомные рекомендации на MainScreen
-//TODO Изменения AddScreen: загрузка данных в бд, добавление фото, увеличить framelayout,
-// кнопку "сохранить" сделать как Button
-//TODO Реализовать Настройки
