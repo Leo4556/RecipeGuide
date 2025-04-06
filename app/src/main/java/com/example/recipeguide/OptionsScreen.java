@@ -73,46 +73,56 @@ public class OptionsScreen extends AppCompatActivity {
             }
         });
 
+        setupNotificationSwitch();
+
+    }
+
+    private void setupNotificationSwitch() {
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
+        // Устанавливаем состояние переключателя из настроек
         boolean isEnabled = preferences.getBoolean("notifications_enabled", false);
         notificationSwitch.setChecked(isEnabled);
 
+        // Обработчик изменения состояния переключателя
         notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                checkAndRequestNotificationPermission();
-            } else {
-                disableNotifications();
-            }
-
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("notifications_enabled", isChecked);
-            editor.apply();
+            handleNotificationToggle(isChecked);
         });
 
-
-        SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        boolean notificationsEnabled = preferences.getBoolean("notifications_enabled", false);
-
-        if (notificationsEnabled) {
+        // Если уведомления включены, запланировать их
+        if (isEnabled) {
             scheduleNotification();
         }
-
     }
 
+    // Обработка изменения состояния переключателя
+    private void handleNotificationToggle(boolean isChecked) {
+        if (isChecked) {
+            checkAndRequestNotificationPermission();
+        } else {
+            disableNotifications();
+        }
+
+        // Сохраняем состояние переключателя в настройки
+        preferences.edit().putBoolean("notifications_enabled", isChecked).apply();
+    }
+
+    // Включение уведомлений
     private void enableNotifications() {
         NotificationHelper.createNotificationChannel(this);
-        Toast.makeText(this, "Уведомления включены", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.notification_on), Toast.LENGTH_SHORT).show();
     }
 
+    // Отключение уведомлений
     private void disableNotifications() {
-        Toast.makeText(this, "Уведомления отключены", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.notification_off), Toast.LENGTH_SHORT).show();
     }
 
-
+    // Проверка и запрос разрешений на уведомления
     private void checkAndRequestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             } else {
                 enableNotifications();
@@ -122,6 +132,7 @@ public class OptionsScreen extends AppCompatActivity {
         }
     }
 
+    // Обработчик результата запроса разрешений
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
@@ -132,14 +143,17 @@ public class OptionsScreen extends AppCompatActivity {
                 }
             });
 
+    // Планирование уведомлений с использованием AlarmManager
     private void scheduleNotification() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        long triggerTime = System.currentTimeMillis() + 120 * 60 * 1000; // 120 минут (2 часа)
+        long triggerTime = System.currentTimeMillis() + 5 * 60 * 1000;
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerTime, 120 * 60 * 1000, pendingIntent);
+        alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP, triggerTime, 24 * 60 * 60 * 1000, pendingIntent); // 24 часа
     }
 
 

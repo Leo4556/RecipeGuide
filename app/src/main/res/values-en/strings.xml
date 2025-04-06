@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Recipe Guide</string>
+    <string name="continue_button">Continue</string>
+    <string name="input_name">Enter name</string>
+    <string name="input_ingredients">Enter ingredients</string>
+    <string name="input_recipe">Enter recipe</string>
+    <string name="input_time">Enter time</string>
+    <string name="hint_ingredients">Your ingredients</string>
+    <string name="hint_recipe">Your recipe</string>
+    <string name="addScreen_cooking_time">Cooking time:</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="recipe">Recipe</string>
+    <string name="save_button">Save</string>
+    <string name="favourite">Favorites</string>
+    <string name="options">Options</string>
+    <string name="dark_themes">Dark theme</string>
+    <string name="notifications">Notifications</string>
+    <string name="support">Support</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="cooking_time">Cooking time: %1$d min</string>
+    <string name="cooking_time_dishList">Cookinh time:\n%1$d min</string>
+    <string name="search">Search...</string>
+    <string name="welcome">Welcome!</string>
+    <string name="recommendation">Recommend trying:</string>
+    <string name="title_notification">Reminder!</string>
+    <string name="message_notification">Don\'t forget to try the new recipe today!</string>
+    <string name="notification_on">Notifications enabled</string>
+    <string name="notification_off">Notifications disabled</string>
+    <string name="recipe_save_toast">The dish has been saved to "Favorites"</string>
+    <string name="validation">Fill in all fields</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

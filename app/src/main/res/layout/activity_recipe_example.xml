@@ -81,7 +81,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:text="Ингредиенты"
+            android:text="@string/ingredients"
             android:textAllCaps="false"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />
@@ -93,7 +93,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:text="Рецепт"
+            android:text="@string/recipe"
             android:textAllCaps="false"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />

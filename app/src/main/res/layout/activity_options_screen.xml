@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Настройки"
+        android:text="@string/options"
         android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -47,7 +47,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_weight="0"
                 android:alpha="255"
-                android:text="Темная тема"
+                android:text="@string/dark_themes"
                 android:textSize="24sp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
@@ -68,20 +68,22 @@
                 android:layout_marginRight="30dp"
                 android:layout_weight="0"
                 android:alpha="255"
-                android:text="Уведомления"
+                android:text="@string/notifications"
                 android:textSize="24sp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
 
         <Button
             android:id="@+id/support"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="30dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:text="Поддержка"
+            android:text="@string/support"
             android:textAllCaps="false"
             android:textStyle="bold"
 
@@ -92,13 +94,15 @@
 
         <Button
             android:id="@+id/politicsConfidence"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="30dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:text="Политика конфиденциальности"
+            android:text="@string/privacy_policy"
             android:textAllCaps="false"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

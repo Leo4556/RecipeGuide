@@ -60,7 +60,7 @@
                 android:textStyle="bold"
                 android:maxLines="2"
                 android:layout_toEndOf="@+id/button_back_arrow"
-                android:hint="Введите название"
+                android:hint="@string/input_name"
                 android:padding="4dp"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -92,7 +92,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
 
 
             <TextView
@@ -100,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 style="@style/DarkerColor"
-                android:text="Время приготовления:" />
+                android:text="@string/addScreen_cooking_time" />
 
             <EditText
                 android:id="@+id/preparation_time"
@@ -108,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 style="@style/DarkerColor.CustomEditText"
-                android:hint="Введите время"
+                android:hint="@string/input_time"
                 android:inputType="number"
                 android:textSize="14sp"
                 android:autoSizeTextType="uniform"
@@ -134,7 +136,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:text="Ингредиенты"
+                android:text="@string/ingredients"
                 android:textAllCaps="false"
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -146,7 +148,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:text="Рецепт"
+                android:text="@string/recipe"
                 android:textAllCaps="false"
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -178,7 +180,7 @@
         android:layout_height="35dp"
         android:layout_margin="15dp"
         android:contentDescription="@string/app_name"
-        android:text="Сохранить"
+        android:text="@string/save_button"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColorLink="#FBDAAC"

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="40dp"
-        android:text="Welcome!"
+        android:text="@string/welcome"
         android:textSize="35sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
         style="@style/DarkerColor"
-        android:text="Рекомендуем попробовать:"
+        android:text="@string/recommendation"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_search_bar" />

@@ -163,7 +163,7 @@ public class AddScreen extends AppCompatActivity {
             saveData(databaseHandler);
         } else {
             // Show an error message to the user
-            Toast.makeText(AddScreen.this, "Заполните все поля", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddScreen.this, getString(R.string.validation), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -180,7 +180,7 @@ public class AddScreen extends AppCompatActivity {
         File file = new File(photoFileName);
         try (FileOutputStream fos = new FileOutputStream(file)) {
             selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos); // Сохраняем изображение
-            Toast.makeText(this, "Блюдо сохранено в 'Избранное'", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.recipe_save_toast), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Ошибка сохранения изображения", Toast.LENGTH_SHORT).show();

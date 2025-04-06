@@ -12,7 +12,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         boolean notificationsEnabled = preferences.getBoolean("notifications_enabled", false);
 
         if (notificationsEnabled) {
-            NotificationHelper.showNotification(context, "Напоминание!", "Не забудьте попробовать новый рецепт сегодня!");
+            NotificationHelper.showNotification(context, context.getString(R.string.title_notification), context.getString(R.string.message_notification));
         }
     }
 }

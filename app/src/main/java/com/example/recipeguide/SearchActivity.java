@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
         searchView = findViewById(R.id.search_field);
-        searchView.setQueryHint("Поиск...");
+        searchView.setQueryHint(getString(R.string.search));
 
         DatabaseHandler databaseHelper = new DatabaseHandler(this);
         ArrayList<Dish> dishes = databaseHelper.getAllRecipe();

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Поиск..."
+        android:hint="@string/search"
         android:inputType="text"
         android:background="?android:attr/colorPrimary"
         android:focusable="true"

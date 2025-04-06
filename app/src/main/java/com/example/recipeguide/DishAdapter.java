@@ -24,8 +24,10 @@ public class DishAdapter extends ArrayAdapter<Dish> {
     private ArrayList<Dish> originalDishes; // Исходный список блюд
     private ArrayList<Dish> filteredDishes; // Отфильтрованный список
     private Filter dishFilter; // Фильтр для поиска
+    private Context context;
     public DishAdapter(Context context, ArrayList<Dish> dishes) {
         super(context, 0, dishes);
+        this.context = context;
         this.originalDishes = new ArrayList<>(dishes); // Сохраняем оригинальный список
         this.filteredDishes = new ArrayList<>(dishes); // Создаём копию для фильтрации
     }
@@ -59,8 +61,9 @@ public class DishAdapter extends ArrayAdapter<Dish> {
                 // Устанавливаем изображение-заглушку, если данных нет
                 dishImageView.setImageResource(R.drawable.stub);
             }
-
-            dishCookingTimeTextView.setText("Время приготовления:\n" + dish.getRecipeCookingTime() + " мин");
+            //dishCookingTimeTextView.setText("Время приготовления: \n" + dish.getRecipeCookingTime() + " мин");
+            String cookingTimeText = context.getString(R.string.cooking_time_dishList, dish.getRecipeCookingTime());
+            dishCookingTimeTextView.setText(cookingTimeText);
         }
 
         return convertView;

@@ -134,8 +134,9 @@ public class recipe_example_activity extends AppCompatActivity {
                     // Устанавливаем изображение-заглушку, если данных нет
                     dishImage.setImageResource(R.drawable.dumplings);
                 }
-
-                dishCookingTime.setText("Время приготовления: " + selectedDish.getCookingTime() + " мин");
+                //dishCookingTime.setText("Время приготовления: " + selectedDish.getCookingTime() + " мин");
+                String cookingTimeText = getString(R.string.cooking_time, selectedDish.getCookingTime());
+                dishCookingTime.setText(cookingTimeText);
                 if (selectedDish.getIsFavorite() == 0) {
                     getTheme().resolveAttribute(R.attr.buttonHeartIcon, typedValue, true);
                     dishFavorite.setImageResource(typedValue.resourceId);
