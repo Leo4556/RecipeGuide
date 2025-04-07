@@ -1,14 +1,18 @@
 package com.example.recipeguide;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.Manifest;
@@ -23,6 +27,11 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class OptionsScreen extends AppCompatActivity {
 
@@ -74,6 +83,12 @@ public class OptionsScreen extends AppCompatActivity {
         });
 
         setupNotificationSwitch();
+
+        Button supportButton = findViewById(R.id.support);
+        supportButton.setOnClickListener(v -> showConfirmationSupport());
+
+        Button politicsConfidence = findViewById(R.id.politicsConfidence);
+        politicsConfidence.setOnClickListener(v -> showConfirmationPolicy());
 
     }
 
@@ -154,6 +169,76 @@ public class OptionsScreen extends AppCompatActivity {
 
         alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP, triggerTime, 24 * 60 * 60 * 1000, pendingIntent); // 24 часа
+    }
+
+    private void showConfirmationSupport() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.confirmation));
+        builder.setMessage(getString(R.string.support_message));
+        builder.setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
+            openLink("Tokarchuk_VJ_22@student.grsu.by"); // Укажите вашу ссылку здесь
+            dialog.dismiss();
+        });
+        builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void openLink(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("mailto:" + url +
+                "?subject=" + Uri.encode(getString(R.string.subject)) +
+                "&body=" + Uri.encode(getString(R.string.body))));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, getString(R.string.no_email_client), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    private void showConfirmationPolicy() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle(getString(R.string.confirmation));
+        builder.setMessage(getString(R.string.policy_message));
+        builder.setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
+            downloadFile(); // Метод для загрузки файла из assets
+            dialog.dismiss();
+        });
+        builder.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void downloadFile() {
+        String fileName = "privacy_policy.pdf"; // Имя файла в папке assets
+        String destinationPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+
+        try {
+            // Читаем файл из папки assets
+            InputStream inputStream = getAssets().open(fileName);
+            File destinationFile = new File(destinationPath, fileName);
+
+            // Создаём поток для записи в папку Downloads
+            FileOutputStream outputStream = new FileOutputStream(destinationFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            // Закрываем потоки
+            outputStream.close();
+            inputStream.close();
+
+            Toast.makeText(this, getString(R.string.successful_saving_policy) + " " + fileName, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.unsuccessful_saving_policy), Toast.LENGTH_SHORT).show();
+        }
     }
 
 

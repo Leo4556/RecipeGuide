@@ -18,7 +18,7 @@
     <string name="support">Support</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="cooking_time">Cooking time: %1$d min</string>
-    <string name="cooking_time_dishList">Cookinh time:\n%1$d min</string>
+    <string name="cooking_time_dishList">Cooking time:\n%1$d min</string>
     <string name="search">Search...</string>
     <string name="welcome">Welcome!</string>
     <string name="recommendation">Recommend trying:</string>
@@ -28,6 +28,16 @@
     <string name="notification_off">Notifications disabled</string>
     <string name="recipe_save_toast">The dish has been saved to "Favorites"</string>
     <string name="validation">Fill in all fields</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="support_message">Do you want to open the support link?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="subject">Support Request</string>
+    <string name="body">Your message</string>
+    <string name="policy_message">Do you want to download the file?</string>
+    <string name="successful_saving_policy">File saved to Downloads: </string>
+    <string name="unsuccessful_saving_policy">Failed to download the file</string>
+    <string name="no_email_client">No email client found</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
