@@ -190,18 +190,14 @@ public class OptionsScreen extends AppCompatActivity {
         intent.setData(Uri.parse("mailto:" + url +
                 "?subject=" + Uri.encode(getString(R.string.subject)) +
                 "&body=" + Uri.encode(getString(R.string.body))));
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, getString(R.string.no_email_client), Toast.LENGTH_SHORT).show();
-        }
+
+        startActivity(intent);
 
     }
 
 
     private void showConfirmationPolicy() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
         builder.setTitle(getString(R.string.confirmation));
         builder.setMessage(getString(R.string.policy_message));
         builder.setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
