@@ -14,6 +14,7 @@
         <item name="buttonGearIcon">@drawable/button_gear_dark</item>
         <item name="buttonSearchBarIcon">@drawable/button_search_bar_dark</item>
         <item name="buttonBackIcon">@drawable/button_back_arrow_dark</item>
+        <item name="buttonShareIcon">@drawable/button_share_dark</item>
         <item name="buttonStyle">@style/CustomButton</item>
     </style>
 

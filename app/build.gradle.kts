@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+
     implementation ("com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation(libs.appcompat)
@@ -49,5 +50,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation ("com.itextpdf:itext7-core:7.2.5")
 
 }
