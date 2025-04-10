@@ -103,14 +103,8 @@ public class OptionsScreen extends AppCompatActivity {
         notificationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             handleNotificationToggle(isChecked);
         });
-
-        // Если уведомления включены, запланировать их
-        if (isEnabled) {
-            scheduleNotification();
-        }
     }
 
-    // Обработка изменения состояния переключателя
     private void handleNotificationToggle(boolean isChecked) {
         if (isChecked) {
             checkAndRequestNotificationPermission();
@@ -118,17 +112,15 @@ public class OptionsScreen extends AppCompatActivity {
             disableNotifications();
         }
 
-        // Сохраняем состояние переключателя в настройки
         preferences.edit().putBoolean("notifications_enabled", isChecked).apply();
     }
 
-    // Включение уведомлений
     private void enableNotifications() {
         NotificationHelper.createNotificationChannel(this);
+        scheduleNotification();
         Toast.makeText(this, getString(R.string.notification_on), Toast.LENGTH_SHORT).show();
     }
 
-    // Отключение уведомлений
     private void disableNotifications() {
         Toast.makeText(this, getString(R.string.notification_off), Toast.LENGTH_SHORT).show();
     }
@@ -158,7 +150,6 @@ public class OptionsScreen extends AppCompatActivity {
                 }
             });
 
-    // Планирование уведомлений с использованием AlarmManager
     private void scheduleNotification() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
