@@ -35,25 +35,4 @@ public class IngredientsFragmentForAddScreen extends Fragment {
         }
 
 
-
-
     }
-
-    /*private void saveData() {
-        String ingredients = editTextIngredients.getText().toString();
-        FileOutputStream fos = null;
-        try {
-            fos = getActivity().openFileOutput("ingredients.txt", getContext().MODE_PRIVATE);
-            fos.write(ingredients.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/

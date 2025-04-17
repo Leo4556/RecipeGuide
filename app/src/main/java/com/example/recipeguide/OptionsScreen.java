@@ -51,8 +51,6 @@ public class OptionsScreen extends AppCompatActivity {
             return insets;
         });
 
-//        getSupportActionBar().hide();
-
         notificationSwitch = findViewById(R.id.switch_notification);
         switcher = findViewById(R.id.switch_theme);
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);

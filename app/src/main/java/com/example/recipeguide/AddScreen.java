@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -44,6 +45,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.itextpdf.io.source.ByteArrayOutputStream;
 
 import java.io.FileOutputStream;
 import java.io.File;
@@ -90,7 +93,6 @@ public class AddScreen extends AppCompatActivity {
         recipeNameEditText.post(() -> scrollingText(recipeNameEditText));
 
         Button buttonSave = findViewById(R.id.button_save);
-        buttonSave.setOnClickListener(v -> saveImageToInternalStorage(databaseHelper));
 
         Button ingredientButton = findViewById(R.id.ingredient);
         Button recipeButton = findViewById(R.id.recipe);
@@ -98,32 +100,19 @@ public class AddScreen extends AppCompatActivity {
         setNewFragment(ingredientFragment);
         ingredientButton.setBackgroundResource(R.drawable.rounded_button_focused);
 
-
-        ingredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                recipeButton.setBackgroundResource(R.drawable.rounded_button_default);
-
-                // Устанавливаем фокус на текущую кнопку
-                ingredientButton.setBackgroundResource(R.drawable.rounded_button_focused);
-                setNewFragment(ingredientFragment);
-
-            }
+        ingredientButton.setOnClickListener(v -> {
+            ingredientButton.setBackgroundResource(R.drawable.rounded_button_focused);
+            recipeButton.setBackgroundResource(R.drawable.rounded_button_default);
+            setNewFragment(ingredientFragment);
         });
 
-        recipeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ingredientButton.setBackgroundResource(R.drawable.rounded_button_default);
-
-                // Устанавливаем фокус на текущую кнопку
-                recipeButton.setBackgroundResource(R.drawable.rounded_button_focused);
-                setNewFragment(recipeFragment);
-            }
+        recipeButton.setOnClickListener(v -> {
+            recipeButton.setBackgroundResource(R.drawable.rounded_button_focused);
+            ingredientButton.setBackgroundResource(R.drawable.rounded_button_default);
+            setNewFragment(recipeFragment);
         });
 
-
+        buttonSave.setOnClickListener(v -> saveImageToInternalStorage(databaseHelper));
 
     }
 
@@ -231,6 +220,19 @@ public class AddScreen extends AppCompatActivity {
         textView.getPaint().getTextBounds(textView.getText().toString(), 0, textView.getText().length(), bounds);
         int textHeight = textView.getLineCount() * textView.getLineHeight();
         return textHeight > textView.getHeight(); // Если высота текста больше TextView
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("recipeName", recipeNameEditText.getText().toString());
+        outState.putString("prepTime", preparationTimeEditText.getText().toString());
+
+        if (selectedBitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            outState.putByteArray("recipeImage", byteArray);
+        }
     }
 
     private void setNewFragment(Fragment fragment) {

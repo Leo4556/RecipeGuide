@@ -28,6 +28,7 @@
             android:exported="false" />
         <activity
             android:name=".AddScreen"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
