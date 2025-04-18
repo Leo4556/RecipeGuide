@@ -8,6 +8,7 @@
         <item name="android:textColorHint">@color/text_time</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:color">@color/main_light_theam</item>
+        <item name="editTextTint">@color/black</item>
         <item name="buttonHomeIcon">@drawable/button_home</item>
         <item name="buttonPlusIcon">@drawable/button_plus</item>
         <item name="buttonHeartIcon">@drawable/button_heart</item>

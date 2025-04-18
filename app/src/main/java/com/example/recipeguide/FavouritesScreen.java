@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowInsetsController;
@@ -44,10 +45,15 @@ public class FavouritesScreen extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
+        Log.d("FavouritesScreen", "Инициализация активности...");
+
+
+
         DatabaseHandler databaseHelper = new DatabaseHandler(this);
         ArrayList<Dish> dishes = databaseHelper.getFavoriteRecipe();
         DishAdapter adapter = new DishAdapter(this, dishes); // Создаём адаптер
 
+        Log.d("FavouritesScreen", "Данные загружены: " + dishes.size());
         listView.setAdapter(adapter); // Устанавливаем адаптер
 
         listView.setOnItemClickListener((parent, view, position, id) -> {

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -97,7 +98,9 @@ public class AddScreen extends AppCompatActivity {
         Button ingredientButton = findViewById(R.id.ingredient);
         Button recipeButton = findViewById(R.id.recipe);
 
+        setNewFragment(recipeFragment);
         setNewFragment(ingredientFragment);
+        //getSupportFragmentManager().beginTransaction().add(recipeFragment, "recipeFragment").commit();
         ingredientButton.setBackgroundResource(R.drawable.rounded_button_focused);
 
         ingredientButton.setOnClickListener(v -> {
@@ -141,6 +144,7 @@ public class AddScreen extends AppCompatActivity {
         try {
             selectedBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri); // Загружаем Bitmap
             btnAddImage.setImageBitmap(selectedBitmap); // Устанавливаем в ImageView
+            btnAddImage.setBackgroundResource(android.R.color.transparent);
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Ошибка загрузки изображения", Toast.LENGTH_SHORT).show();
@@ -150,6 +154,7 @@ public class AddScreen extends AppCompatActivity {
     private void saveImageToInternalStorage(DatabaseHandler databaseHandler) {
         if (validateInputs()) {
             saveData(databaseHandler);
+            Toast.makeText(this, getString(R.string.recipe_save_toast), Toast.LENGTH_SHORT).show();
         } else {
             // Show an error message to the user
             Toast.makeText(AddScreen.this, getString(R.string.validation), Toast.LENGTH_SHORT).show();
@@ -169,7 +174,7 @@ public class AddScreen extends AppCompatActivity {
         File file = new File(photoFileName);
         try (FileOutputStream fos = new FileOutputStream(file)) {
             selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos); // Сохраняем изображение
-            Toast.makeText(this, getString(R.string.recipe_save_toast), Toast.LENGTH_SHORT).show();
+
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Ошибка сохранения изображения", Toast.LENGTH_SHORT).show();
@@ -180,17 +185,52 @@ public class AddScreen extends AppCompatActivity {
         databaseHandler.addRecipe(recipe);
     }
 
+
     private boolean validateInputs() {
-        String recipeName = recipeNameEditText.getText().toString().trim();
-        String preparationTime = preparationTimeEditText.getText().toString().trim();
+        boolean isValid = true;
 
-        boolean isActivityDataValid = !recipeName.isEmpty() && !preparationTime.isEmpty();
-        boolean isIngredientsDataValid = ingredientFragment != null && ingredientFragment.validateInputs();
-        boolean isRecipeDataValid = recipeFragment != null && recipeFragment.validateInputs();
-        boolean isImageDataValid = selectedBitmap != null;
+        // Проверка имени рецепта
+        if (recipeNameEditText.getText().toString().trim().isEmpty()) {
+            recipeNameEditText.setBackgroundResource(R.drawable.error_background_with_border); // Красный контур
+            isValid = false;
+        } else {
+            recipeNameEditText.setBackgroundResource(R.color.background_add_screen); // Сбрасываем ошибку
+        }
 
-        return isActivityDataValid && isIngredientsDataValid && isRecipeDataValid && isImageDataValid;
+        // Проверка времени приготовления
+        if (preparationTimeEditText.getText().toString().trim().isEmpty()) {
+            preparationTimeEditText.setBackgroundResource(R.drawable.error_background_with_border); // Красная линия ввода текста
+            isValid = false;
+        } else {
+            preparationTimeEditText.setBackgroundResource(R.color.background_add_screen); // Сбрасываем ошибку
+        }
+
+        // Проверка изображения
+        if (selectedBitmap == null) { // Проверка наличия изображения
+            btnAddImage.setBackgroundResource(R.drawable.error_underline);
+            isValid = false;
+        } else {
+            btnAddImage.setBackgroundResource(android.R.color.transparent); // Сбрасываем ошибку
+        }
+
+        if (ingredientFragment.validateInputs()) {
+            ingredientFragment.errorInputs();
+            isValid = false;
+        } else {
+            ingredientFragment.goodInputs();
+        }
+
+        if (recipeFragment.validateInputs()) {
+            recipeFragment.errorInputs();
+            isValid = false;
+        } else {
+            recipeFragment.goodInputs();
+        }
+
+        return isValid;
     }
+
+
 
     private void scrollingText(EditText nameDish) {
         if (isTextOverflowing(nameDish)) {
@@ -220,19 +260,6 @@ public class AddScreen extends AppCompatActivity {
         textView.getPaint().getTextBounds(textView.getText().toString(), 0, textView.getText().length(), bounds);
         int textHeight = textView.getLineCount() * textView.getLineHeight();
         return textHeight > textView.getHeight(); // Если высота текста больше TextView
-    }
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("recipeName", recipeNameEditText.getText().toString());
-        outState.putString("prepTime", preparationTimeEditText.getText().toString());
-
-        if (selectedBitmap != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            outState.putByteArray("recipeImage", byteArray);
-        }
     }
 
     private void setNewFragment(Fragment fragment) {

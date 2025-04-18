@@ -1,8 +1,12 @@
 package com.example.recipeguide;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import android.widget.ImageButton;
 public class RecipeFragmentForAddScreen extends Fragment {
 
     private EditText editTextRecipe;
+    private ColorStateList currentTint;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,40 +28,30 @@ public class RecipeFragmentForAddScreen extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_input, container, false);
 
         editTextRecipe = view.findViewById(R.id.recipe);
-        ImageButton saveButton = view.findViewById(R.id.button_save);
-
-//        saveButton.setOnClickListener(v -> saveData());
+        if (currentTint != null) {
+            editTextRecipe.setBackgroundTintList(currentTint);
+        }
 
         return view;}
 
         public boolean validateInputs() {
             String recipe = editTextRecipe.getText().toString().trim();
-            return !recipe.isEmpty();
+            return recipe.isEmpty();
         }
 
         public String getRecipeData() {
             return editTextRecipe.getText().toString().trim();
         }
 
-
-
+    public void errorInputs() {
+        currentTint = ColorStateList.valueOf(Color.RED); // Сохраняем цвет ошибки
+        editTextRecipe.setBackgroundTintList(currentTint);
     }
 
-    /*private void saveData() {
-        String recipe = editTextRecipe.getText().toString();
-        FileOutputStream fos = null;
-        try {
-            fos = getActivity().openFileOutput("recipe.txt", getContext().MODE_PRIVATE);
-            fos.write(recipe.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
+    public void goodInputs() {
+        currentTint = AppCompatResources.getColorStateList(getContext(), R.color.background_add_screen); // Ваш стандартный цвет
+        editTextRecipe.setBackgroundTintList(currentTint);
+    }
+
+
+}

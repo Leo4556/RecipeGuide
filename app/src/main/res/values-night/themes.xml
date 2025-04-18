@@ -8,6 +8,7 @@
         <item name="android:textColorHint">@color/text_time_dark</item>
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:color">@color/main_dark_theam</item>
+        <item name="editTextTint">@color/white</item>
         <item name="buttonHomeIcon">@drawable/button_home_dark</item>
         <item name="buttonPlusIcon">@drawable/button_plus_dark</item>
         <item name="buttonHeartIcon">@drawable/button_heart_dark</item>
