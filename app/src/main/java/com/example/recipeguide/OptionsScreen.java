@@ -37,7 +37,7 @@ public class OptionsScreen extends AppCompatActivity {
 
     Switch switcher, notificationSwitch;
     boolean nightMode;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences, preferences;
     SharedPreferences.Editor editor;
 
     @Override
@@ -91,10 +91,10 @@ public class OptionsScreen extends AppCompatActivity {
     }
 
     private void setupNotificationSwitch() {
-        sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
         // Устанавливаем состояние переключателя из настроек
-        boolean isEnabled = sharedPreferences.getBoolean("notifications_enabled", false);
+        boolean isEnabled = preferences.getBoolean("notifications_enabled", false);
         notificationSwitch.setChecked(isEnabled);
 
         // Обработчик изменения состояния переключателя
@@ -110,7 +110,7 @@ public class OptionsScreen extends AppCompatActivity {
             disableNotifications();
         }
 
-        sharedPreferences.edit().putBoolean("notifications_enabled", isChecked).apply();
+        preferences.edit().putBoolean("notifications_enabled", isChecked).apply();
     }
 
     private void enableNotifications() {
