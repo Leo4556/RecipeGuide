@@ -1,22 +1,26 @@
 package com.example.recipeguide;
 
-public class Dish {
-    private int id;
+import java.io.Serializable;
+
+public class Dish implements Serializable {
+    private String id;
     private String recipeName;
+    private String recipeNameEn;
     private String recipeImage;
     private int recipeCookingTime;
 
     public Dish() {
     }
 
-    public Dish(int id, String recipeName, String recipeImage, int recipeCookingTime) {
+    public Dish(String id, String recipeName, String recipeNameEn, String recipeImage, int recipeCookingTime) {
         this.id = id;
         this.recipeName = recipeName;
+        this.recipeNameEn = recipeNameEn;
         this.recipeImage = recipeImage;
         this.recipeCookingTime = recipeCookingTime;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -28,11 +32,19 @@ public class Dish {
         this.recipeImage = recipeImage;
     }
 
+    public String getRecipeNameEn() {
+        return recipeNameEn;
+    }
+
+    public void setRecipeNameEn(String recipeNameEn) {
+        this.recipeNameEn = recipeNameEn;
+    }
+
     public void setRecipeCookingTime(int recipeCookingTime) {
         this.recipeCookingTime = recipeCookingTime;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
     public String getRecipeName() {

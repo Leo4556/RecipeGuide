@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "335635998282",
+    "firebase_url": "https://recipe-guide-48fab-default-rtdb.firebaseio.com",
+    "project_id": "recipe-guide-48fab",
+    "storage_bucket": "recipe-guide-48fab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335635998282:android:382ad945774a5a83ffe8b3",
+        "android_client_info": {
+          "package_name": "com.example.recipeguide"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9ZoZYIM_2hMjP5Rbv2FMiA9he32IjZQQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -62,16 +62,46 @@ public class DatabaseHandler extends SQLiteAssetHelper {
                 null, null, null);
     }
 
+    public boolean myRecipeInSQLite(String id){
+        myDataBase = this.getWritableDatabase();
+
+        // Проверяем, есть ли рецепт в SQLite
+        Cursor cursor = myDataBase.query(Util.TABLE_NAME, null, Util.KEY_ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+
+        myDataBase.close();
+
+        return exists;
+    }
+    public void insertOrUpdateRecipe(Recipe recipe) {
+        myDataBase = this.getWritableDatabase();
+
+        // Проверяем, есть ли рецепт в SQLite
+        Cursor cursor = myDataBase.query(Util.TABLE_NAME, null, Util.KEY_ID + "=?", new String[]{String.valueOf(recipe.getId())}, null, null, null);
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+
+        if (!exists) {
+            addRecipe(recipe);
+        }
+        myDataBase.close();
+    }
+
     //Добавить рецепт
     public void addRecipe (Recipe recipe){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(Util.KEY_ID, recipe.getId());
         contentValues.put(Util.KEY_NAME, recipe.getName());
+        contentValues.put(Util.KEY_NAME_EN, recipe.getName_en());
         contentValues.put(Util.KEY_IMAGE, recipe.getImage());
         contentValues.put(Util.KEY_COOKINGTIME, recipe.getCookingTime());
         contentValues.put(Util.KEY_RECIPE, recipe.getRecipe());
+        contentValues.put(Util.KEY_RECIPE_EN, recipe.getRecipe_en());
         contentValues.put(Util.KEY_INGREDIENT, recipe.getIngredient());
+        contentValues.put(Util.KEY_INGREDIENT_EN, recipe.getIngredient_en());
         contentValues.put(Util.KEY_ISFAVORITE, recipe.getIsFavorite());
 
         db.insert(Util.TABLE_NAME, null, contentValues);
@@ -79,17 +109,18 @@ public class DatabaseHandler extends SQLiteAssetHelper {
     }
 
     //Найти рецерт по id(можно поменять вместо id другую переменную)
-    public Recipe getRecipe(int id){
+    public Recipe getRecipe(String id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(Util.TABLE_NAME, new String[] {Util.KEY_ID, Util.KEY_NAME, Util.KEY_IMAGE,
-                Util.KEY_COOKINGTIME,Util.KEY_RECIPE,Util.KEY_INGREDIENT, Util.KEY_ISFAVORITE},Util.KEY_ID + "=?",
+        Cursor cursor = db.query(Util.TABLE_NAME, new String[] {Util.KEY_ID, Util.KEY_NAME, Util.KEY_NAME_EN, Util.KEY_IMAGE,
+                Util.KEY_COOKINGTIME,Util.KEY_RECIPE, Util.KEY_RECIPE_EN,Util.KEY_INGREDIENT,Util.KEY_INGREDIENT_EN, Util.KEY_ISFAVORITE},Util.KEY_ID + "=?",
                 new String[]{String.valueOf(id)},null,null,null,null);
         if(cursor != null){
             cursor.moveToFirst();
         }
-        Recipe recipe = new Recipe(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1),  cursor.getString(2), Integer.parseInt(cursor.getString(3)),
-                cursor.getString(4),  cursor.getString(5), Integer.parseInt(cursor.getString(6)));
+        Recipe recipe = new Recipe(cursor.getString(0),
+                cursor.getString(1),  cursor.getString(2), cursor.getString(3),
+                Integer.parseInt(cursor.getString(4)), cursor.getString(5),
+                cursor.getString(6),  cursor.getString(7),cursor.getString(8), Integer.parseInt(cursor.getString(9)));
         cursor.close();
         return recipe;
     }
@@ -107,15 +138,16 @@ public class DatabaseHandler extends SQLiteAssetHelper {
             Log.e("DB_ERROR", "Error opening database: " + e.getMessage());
         }
         ArrayList<Dish> dishList = new ArrayList<>();
-        String selectAllRecipe = "SELECT " + Util.KEY_ID + ", " + Util.KEY_NAME + ", " + Util.KEY_IMAGE + ", " + Util.KEY_COOKINGTIME + " FROM " + Util.TABLE_NAME;
+        String selectAllRecipe = "SELECT " + Util.KEY_ID + ", " + Util.KEY_NAME + ", " + Util.KEY_NAME_EN + ", " + Util.KEY_IMAGE + ", " + Util.KEY_COOKINGTIME + " FROM " + Util.TABLE_NAME;
         Cursor cursor = myDataBase.rawQuery(selectAllRecipe, null);
         if (cursor.moveToFirst()){
             do{
                 Dish dish = new Dish();
-                dish.setId(Integer.parseInt(cursor.getString(0)));
+                dish.setId(cursor.getString(0));
                 dish.setRecipeName(cursor.getString(1));
-                dish.setRecipeImage(cursor.getString(2));
-                dish.setRecipeCookingTime(Integer.parseInt(cursor.getString(3)));
+                dish.setRecipeNameEn(cursor.getString(2));
+                dish.setRecipeImage(cursor.getString(3));
+                dish.setRecipeCookingTime(Integer.parseInt(cursor.getString(4)));
 
                 dishList.add(dish);
             }while (cursor.moveToNext());
@@ -151,10 +183,11 @@ public class DatabaseHandler extends SQLiteAssetHelper {
                 for (String dishData : dishesArray) {
                     String[] dishFields = dishData.split("\\|");
                     Dish dish = new Dish(
-                            Integer.parseInt(dishFields[0]),  // id
+                            dishFields[0],  // id
                             dishFields[1],                   // recipeName
-                            dishFields[2],                   // recipeImage
-                            Integer.parseInt(dishFields[3])  // recipeCookingTime
+                            dishFields[2],
+                            dishFields[3],                   // recipeImage
+                            Integer.parseInt(dishFields[4])  // recipeCookingTime
                     );
                     savedDishes.add(dish);
                 }
@@ -163,15 +196,16 @@ public class DatabaseHandler extends SQLiteAssetHelper {
         }
 
         ArrayList<Dish> dishList = new ArrayList<>();
-        String selectAllRecipe = "SELECT " + Util.KEY_ID + ", " + Util.KEY_NAME + ", " + Util.KEY_IMAGE + ", " + Util.KEY_COOKINGTIME + " FROM " + Util.TABLE_NAME + " ORDER BY RANDOM() LIMIT 3";
+        String selectAllRecipe = "SELECT " + Util.KEY_ID + ", " + Util.KEY_NAME + ", " + Util.KEY_NAME_EN + ", " + Util.KEY_IMAGE + ", " + Util.KEY_COOKINGTIME + " FROM " + Util.TABLE_NAME + " ORDER BY RANDOM() LIMIT 3";
         Cursor cursor = myDataBase.rawQuery(selectAllRecipe, null);
         if (cursor.moveToFirst()){
             do{
                 Dish dish = new Dish();
-                dish.setId(Integer.parseInt(cursor.getString(0)));
+                dish.setId(cursor.getString(0));
                 dish.setRecipeName(cursor.getString(1));
-                dish.setRecipeImage(cursor.getString(2));
-                dish.setRecipeCookingTime(Integer.parseInt(cursor.getString(3)));
+                dish.setRecipeNameEn(cursor.getString(2));
+                dish.setRecipeImage(cursor.getString(3));
+                dish.setRecipeCookingTime(Integer.parseInt(cursor.getString(4)));
 
                 dishList.add(dish);
             }while (cursor.moveToNext());
@@ -183,6 +217,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
         for (Dish dish : dishList) {
             savedDishesBuilder.append(dish.getId()).append("|")
                     .append(dish.getRecipeName()).append("|")
+                    .append(dish.getRecipeNameEn()).append("|")
                     .append(dish.getRecipeImage()).append("|")
                     .append(dish.getRecipeCookingTime()).append(";");
         }
@@ -210,7 +245,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
         if (cursor.moveToFirst()){
             do{
                 Dish dish = new Dish();
-                dish.setId(Integer.parseInt(cursor.getString(0)));
+                dish.setId(cursor.getString(0));
                 dish.setRecipeName(cursor.getString(1));
                 dish.setRecipeImage(cursor.getString(2));
                 dish.setRecipeCookingTime(Integer.parseInt(cursor.getString(3)));

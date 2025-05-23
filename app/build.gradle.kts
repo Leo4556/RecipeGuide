@@ -1,6 +1,7 @@
 
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -52,5 +53,20 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation ("com.itextpdf:itext7-core:7.2.5")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
+
+    implementation ("com.google.mlkit:translate:17.0.1")
+
+    implementation ("com.cloudinary:cloudinary-android:3.0.2")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation ("com.google.code.gson:gson:2.8.9")
+
+
 
 }

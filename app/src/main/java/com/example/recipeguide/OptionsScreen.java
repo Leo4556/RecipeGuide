@@ -7,12 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.Manifest;
@@ -28,17 +30,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 public class OptionsScreen extends AppCompatActivity {
 
     Switch switcher, notificationSwitch;
-    boolean nightMode;
+    boolean nightMode, russianLanguage;
     SharedPreferences sharedPreferences, preferences;
     SharedPreferences.Editor editor;
+    private FirebaseAuth mAuth;
+    private String selectedLanguage = "Русский";
+    private String selectedLang = "ru";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,9 @@ public class OptionsScreen extends AppCompatActivity {
         switcher = findViewById(R.id.switch_theme);
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
         nightMode = sharedPreferences.getBoolean("night", false);
+        russianLanguage = sharedPreferences.getBoolean("language", false);
+
+
 
         if (nightMode) {
             switcher.setChecked(true);
@@ -76,7 +87,7 @@ public class OptionsScreen extends AppCompatActivity {
                     editor.putBoolean("night", true);
                 }
                 editor.apply();
-                
+
             }
         });
 
@@ -87,6 +98,25 @@ public class OptionsScreen extends AppCompatActivity {
 
         Button politicsConfidence = findViewById(R.id.politicsConfidence);
         politicsConfidence.setOnClickListener(v -> showConfirmationPolicy());
+
+        mAuth = FirebaseAuth.getInstance();
+        LinearLayout accountSection = findViewById(R.id.account_section);
+        accountSection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAuth.getCurrentUser() == null) {
+                    Intent intent = new Intent(OptionsScreen.this, LoginActivity.class);
+                    startActivity(intent);
+
+                } else {
+                    Intent intent = new Intent(OptionsScreen.this, ActivityProfile.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        LinearLayout languageSection = findViewById(R.id.language_section);
+        languageSection.setOnClickListener(v -> showLanguageDialog());
 
     }
 
@@ -226,11 +256,73 @@ public class OptionsScreen extends AppCompatActivity {
         }
     }
 
+    private void showLanguageDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Выберите язык");
+
+        String[] languages = {"English", "Русский"};
+        boolean isRussian = sharedPreferences.getBoolean("language", true);
+        int checkedItem = isRussian ? 1 : 0;
+
+
+        builder.setSingleChoiceItems(languages, checkedItem, (dialog, which) -> {
+            selectedLang = (which == 1) ? "ru" : "en";
+        });
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            if(selectedLang.equals("en")){
+                selectedLanguage = "English";
+            }else {
+                selectedLanguage = "Русский";
+            }
+            Toast.makeText(this, "Вы выбрали: " + selectedLanguage, Toast.LENGTH_SHORT).show();
+            setAppLocale(selectedLang);
+            dialog.dismiss();
+        });
+
+        builder.setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void setAppLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+
+        // Сохранение выбора языка
+        editor = sharedPreferences.edit();
+        editor.putBoolean("language", languageCode.equals("ru"));
+        editor.apply();
+
+        // Перезапуск активности для обновления локализации
+        Intent refresh = new Intent(this, OptionsScreen.class);
+        startActivity(refresh);
+        finish();
+    }
+
+
+    private String getSystemLanguage() {
+        return Locale.getDefault().getLanguage(); // Возвращает "ru" для русского, "en" для английского
+    }
+
 
     public static boolean getCurrentTheme(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MODE", Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean("night", false);
     }
+
+    public static boolean getCurrentLanguage(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("language", false);
+    }
+
 
     public void goHome(View view) {
         Intent intent = new Intent(this, MainScreen.class);
@@ -248,8 +340,9 @@ public class OptionsScreen extends AppCompatActivity {
     }
 
     public void goOptions(View view) {
-        Intent intent = new Intent(this, OptionsScreen.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+
     }
 
 

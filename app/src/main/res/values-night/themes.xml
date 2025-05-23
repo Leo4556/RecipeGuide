@@ -16,13 +16,25 @@
         <item name="buttonSearchBarIcon">@drawable/button_search_bar_dark</item>
         <item name="buttonBackIcon">@drawable/button_back_arrow_dark</item>
         <item name="buttonShareIcon">@drawable/button_share_dark</item>
+        <item name="buttonAccountIcon">@drawable/account_dark</item>
+        <item name="buttonLanguageIcon">@drawable/language_dark</item>
         <item name="buttonStyle">@style/CustomButton</item>
+        <item name="colorDivider">@color/white</item>
     </style>
 
     <style name="CustomButton">
         <item name="android:textSize">16sp</item>
         <item name="android:background">@drawable/rounded_button_fragment</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ProfileButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@color/background_dark_theam</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="DarkerColor">

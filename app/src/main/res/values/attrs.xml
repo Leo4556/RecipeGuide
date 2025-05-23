@@ -8,5 +8,8 @@
     <attr name="buttonSearchBarIcon" format="reference" />
     <attr name="buttonBackIcon" format="reference" />
     <attr name="buttonShareIcon" format="reference" />
+    <attr name="buttonAccountIcon" format="reference" />
+    <attr name="buttonLanguageIcon" format="reference" />
     <attr name="editTextTint" format="reference" />
+    <attr name="colorDivider" format="reference" />
 </resources>

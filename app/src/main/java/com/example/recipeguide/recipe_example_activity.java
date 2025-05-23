@@ -3,6 +3,8 @@ package com.example.recipeguide;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -70,6 +72,7 @@ public class recipe_example_activity extends AppCompatActivity {
     TypedValue typedValue = new TypedValue();
     private boolean isFavorite = false;
     private Recipe selectedDish;
+    SharedPreferences sharedPreferences;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -85,9 +88,11 @@ public class recipe_example_activity extends AppCompatActivity {
             return insets;
         });
 
+        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+
         setupBackButtonHandler();
         ImageButton saveFavoritesButton = findViewById(R.id.button_save_favorites);
-        int dishId = getIntent().getIntExtra("dish_id", -1); // -1 — значение по умолчанию
+        String dishId = getIntent().getStringExtra("dish_id");
         DatabaseHandler databaseHelper = new DatabaseHandler(this);
 
         saveFavoritesButton.setOnClickListener(view -> toggleFavoriteButton(dishId, saveFavoritesButton, databaseHelper));
@@ -130,9 +135,13 @@ public class recipe_example_activity extends AppCompatActivity {
         recipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (dishId != -1) {
+                if (dishId != null) {
                     Recipe selectedDish = databaseHelper.getRecipe(dishId);
-                    sendDishDataToFragment(receptFragment, selectedDish);
+                    if(sharedPreferences.getBoolean("language", false)){
+                        sendDishDataToFragment(receptFragment, selectedDish.getIngredient(), selectedDish.getRecipe());
+                    }else {
+                        sendDishDataToFragment(receptFragment, selectedDish.getIngredient_en(), selectedDish.getRecipe_en());
+                    }
                 }
                 ingredientButton.setBackgroundResource(R.drawable.rounded_button_default);
 
@@ -145,8 +154,8 @@ public class recipe_example_activity extends AppCompatActivity {
     }
 
 
-    private void loadData(int dishId, DatabaseHandler databaseHelper) {
-        if (dishId != -1) {
+    private void loadData(String dishId, DatabaseHandler databaseHelper) {
+        if (dishId != null) {
             // Здесь можно использовать dishId для загрузки данных из базы
 
             selectedDish = databaseHelper.getRecipe(dishId);
@@ -158,13 +167,17 @@ public class recipe_example_activity extends AppCompatActivity {
                 TextView dishCookingTime = findViewById(R.id.Cooking_time);
                 ImageButton dishFavorite = findViewById(R.id.button_save_favorites);
 
-                dishName.setText(selectedDish.getName());
                 String imagePath = selectedDish.getImage();
                 if (imagePath != null) {
                     File imgFile = new File(imagePath);
                     if (imgFile.exists()) {
                         Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         dishImage.setImageBitmap(bitmap); // Устанавливаем изображение в ImageView
+                    }else {
+                        Glide.with(this)
+                                .load(imagePath)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL) // Загружаем из кеша, если интернета нет
+                                .into(dishImage);
                     }
                 } else {
                     // Устанавливаем изображение-заглушку, если данных нет
@@ -179,7 +192,15 @@ public class recipe_example_activity extends AppCompatActivity {
                 } else {
                     dishFavorite.setImageResource(R.drawable.button_heart_red);
                 }
-                sendDishDataToFragment(ingredientFragment, selectedDish);
+
+
+                if(sharedPreferences.getBoolean("language", false)){
+                    dishName.setText(selectedDish.getName());
+                    sendDishDataToFragment(ingredientFragment, selectedDish.getIngredient(), selectedDish.getRecipe());
+                }else{
+                    dishName.setText(selectedDish.getName_en());
+                    sendDishDataToFragment(ingredientFragment, selectedDish.getIngredient_en(), selectedDish.getRecipe_en());
+                }
             }
         }
     }
@@ -191,11 +212,11 @@ public class recipe_example_activity extends AppCompatActivity {
         ft.commit();
     }
 
-    private void sendDishDataToFragment(Fragment fragment, Recipe selectedDish) {
+    private void sendDishDataToFragment(Fragment fragment, String selectedIngredient, String selectedRecipe) {
         // Создаём объект Bundle для передачи данных
         Bundle bundle = new Bundle();
-        bundle.putString("dish_ingredients", selectedDish.getIngredient()); // Например, список ингредиентов
-        bundle.putString("dish_recipe", selectedDish.getRecipe()); // Например, текст рецепта
+        bundle.putString("dish_ingredients", selectedIngredient); // Например, список ингредиентов
+        bundle.putString("dish_recipe", selectedRecipe); // Например, текст рецепта
 
         // Передаём Bundle во фрагмент
         fragment.setArguments(bundle);
@@ -231,7 +252,7 @@ public class recipe_example_activity extends AppCompatActivity {
         return textHeight > textView.getHeight(); // Если высота текста больше TextView
     }
 
-    private void toggleFavoriteButton(int dishId, ImageButton saveFavoritesButton, DatabaseHandler databaseHandler) {
+    private void toggleFavoriteButton(String dishId, ImageButton saveFavoritesButton, DatabaseHandler databaseHandler) {
         if (isFavorite) {
             updateFavorite(dishId, databaseHandler, 0);
 
@@ -248,8 +269,8 @@ public class recipe_example_activity extends AppCompatActivity {
         }
     }
 
-    private void updateFavorite(int dishId, DatabaseHandler databaseHandler, int isFavorite) {
-        if (dishId != -1) {
+    private void updateFavorite(String dishId, DatabaseHandler databaseHandler, int isFavorite) {
+        if (dishId != null) {
             Recipe selectedDish = databaseHandler.getRecipe(dishId);
             if (selectedDish != null) {
                 selectedDish.setIsFavorite(isFavorite);

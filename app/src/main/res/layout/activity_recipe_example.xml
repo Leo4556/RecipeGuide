@@ -18,7 +18,8 @@
         android:onClick="goBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/buttonBackIcon"/>
+        app:srcCompat="?attr/buttonBackIcon"
+        tools:ignore="TouchTargetSizeCheck" />
 
 
     <TextView
@@ -37,7 +38,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <ImageButton
         android:id="@+id/button_save_favorites"
         android:layout_width="wrap_content"
@@ -46,7 +46,8 @@
         android:contentDescription="button_save_favorites"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/buttonHeartIcon" />
+        app:srcCompat="?attr/buttonHeartIcon"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/image_dish"

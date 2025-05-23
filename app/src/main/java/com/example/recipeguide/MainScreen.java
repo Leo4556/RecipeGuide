@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -15,19 +17,32 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.cloudinary.android.MediaManager;
+import com.google.firebase.FirebaseApp;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import Data.DatabaseHandler;
 
 public class MainScreen extends AppCompatActivity {
 
     ListView listView;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    boolean isNightMode, russianLanguage;
+    private static boolean isCloudinaryInitialized = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        boolean isNightMode = OptionsScreen.getCurrentTheme(this);
+
+
+        initConfig();
+        isNightMode = OptionsScreen.getCurrentTheme(this);
 
         if (isNightMode) {
             // Действия для тёмной темы
@@ -36,6 +51,7 @@ public class MainScreen extends AppCompatActivity {
             // Действия для светлой темы
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
         setContentView(R.layout.main_screen);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -63,6 +79,26 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initConfig() {
+        if (!isCloudinaryInitialized) { // Проверяем, была ли уже инициализация
+            Map config = new HashMap();
+            config.put("cloud_name", "dx7hf8znl");
+            config.put("api_key", "182439927864613");
+            config.put("api_secret", "U-dXjr3iiTkAM_SnAOu3C613_vE");
+
+            MediaManager.init(this, config);
+            isCloudinaryInitialized = true; // Устанавливаем флаг после инициализации
+            Log.d("Cloudinary", "Cloudinary успешно инициализирован!");
+        } else {
+            Log.d("Cloudinary", "Cloudinary уже был инициализирован, повторное выполнение не требуется.");
+        }
+    }
+
+
+    private String getSystemLanguage() {
+        return Locale.getDefault().getLanguage(); // Возвращает "ru" для русского, "en" для английского
     }
 
     public void goHome(View view) {

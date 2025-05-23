@@ -1,6 +1,7 @@
 package com.example.recipeguide;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.recipeguide.Dish;
 import com.example.recipeguide.R;
 
@@ -25,17 +28,21 @@ public class DishAdapter extends ArrayAdapter<Dish> {
     private ArrayList<Dish> filteredDishes; // Отфильтрованный список
     private Filter dishFilter; // Фильтр для поиска
     private Context context;
+    SharedPreferences sharedPreferences;
     public DishAdapter(Context context, ArrayList<Dish> dishes) {
         super(context, 0, dishes);
         this.context = context;
         this.originalDishes = new ArrayList<>(dishes); // Сохраняем оригинальный список
         this.filteredDishes = new ArrayList<>(dishes); // Создаём копию для фильтрации
+        sharedPreferences = context.getSharedPreferences("MODE", Context.MODE_PRIVATE);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Dish dish = getItem(position);
+
+
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_search_list, parent, false);
@@ -48,7 +55,12 @@ public class DishAdapter extends ArrayAdapter<Dish> {
 
         // Устанавливаем данные
         if (dish != null) {
-            dishNameTextView.setText(dish.getRecipeName());
+            if(sharedPreferences.getBoolean("language", false)){
+                dishNameTextView.setText(dish.getRecipeName());
+            }else {
+                dishNameTextView.setText(dish.getRecipeNameEn());
+            }
+
 
             String imagePath = dish.getRecipeImage();
             if (imagePath != null) {
@@ -56,6 +68,11 @@ public class DishAdapter extends ArrayAdapter<Dish> {
                 if (imgFile.exists()) {
                     Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     dishImageView.setImageBitmap(bitmap); // Устанавливаем изображение в ImageView
+                }else {
+                    Glide.with(context)
+                            .load(imagePath)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) // Загружаем из кеша, если интернета нет
+                            .into(dishImageView);
                 }
             } else {
                 // Устанавливаем изображение-заглушку, если данных нет
@@ -98,8 +115,15 @@ public class DishAdapter extends ArrayAdapter<Dish> {
                         // Отфильтровываем по названию блюда
                         ArrayList<Dish> filteredList = new ArrayList<>();
                         for (Dish dish : originalDishes) {
-                            if (dish.getRecipeName().toLowerCase().contains(filterString)) {
-                                filteredList.add(dish);
+                            if(sharedPreferences.getBoolean("language", false)){
+                                if (dish.getRecipeName().toLowerCase().contains(filterString)) {
+                                    filteredList.add(dish);
+                                }
+
+                            }else{
+                                if (dish.getRecipeNameEn().toLowerCase().contains(filterString)) {
+                                    filteredList.add(dish);
+                                }
                             }
                         }
 
